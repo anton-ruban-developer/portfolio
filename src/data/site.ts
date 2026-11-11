@@ -9,7 +9,7 @@ export const site = {
   phone: '+380958702674',
   phoneLabel: '+38 (095) 870-26-74',
   /** ключ Web3Forms: заявки з форми приходять на пошту, на яку він створений (ruban_web_studio@ukr.net) */
-  formKey: 'a942b5d7-3f46-451f-bea0-3f8060569501',
+  formKey: '0384fabe-1909-4cd8-96b5-88a68200f75a',
   /** ID Google Analytics 4 (вигляд G-XXXXXXXXXX). Порожньо: аналітика не підключається */
   gaId: '',
 };
