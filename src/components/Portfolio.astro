@@ -1,0 +1,165 @@
+---
+import { projects } from '../data/projects';
+
+const featured = projects.filter((p) => p.featured);
+const rest = projects.filter((p) => !p.featured);
+---
+
+<section class="section container" id="portfolio">
+  <p class="eyebrow">Портфоліо</p>
+  <h2>Роботи, які можна оглянути</h2>
+  <p class="lead">Наведіть курсор на скріншот (на телефоні просто прокрутіть до нього), щоб переглянути сайт повністю.</p>
+
+  <div class="cases">
+    {featured.map((p) => (
+      <article class="case" data-reveal>
+        <a class="card spot" href={p.url} target="_blank" rel="noopener" aria-label={`Відкрити сайт: ${p.title}`} style={`--t:${p.scroll ?? 10}s`}>
+          <div class="bar">
+            <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+            <span class="name">{p.title}</span>
+            <span class="go" aria-hidden="true">↗</span>
+          </div>
+          <div class="view">
+            {p.image
+              ? <img src={p.image} alt={`Сайт ${p.title}: повна сторінка`} loading="lazy" decoding="async" />
+              : <div class="placeholder">Скріншот</div>}
+            <span class="hint" aria-hidden="true">Дивись</span>
+          </div>
+        </a>
+
+        <div class="body">
+          <p class="type">{p.type}</p>
+          <h3>{p.short}</h3>
+          <p class="desc">{p.description}</p>
+          {p.results && (
+            <ul>
+              {p.results.map((r) => <li>{r}</li>)}
+            </ul>
+          )}
+          <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
+          <a class="btn" href={p.url} target="_blank" rel="noopener">Відкрити сайт ↗</a>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  {rest.length > 0 && (
+    <div class="more">
+      {rest.map((p, i) => (
+        <article class="tile" data-reveal style={`--i:${i % 2}`}>
+          <a class="card spot" href={p.url} target="_blank" rel="noopener" aria-label={`Відкрити сайт: ${p.title}`} style={`--t:${p.scroll ?? 10}s`}>
+            <div class="bar">
+              <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="name">{p.title}</span>
+              <span class="go" aria-hidden="true">↗</span>
+            </div>
+            <div class="view">
+              {p.image
+                ? <img src={p.image} alt={`Сайт ${p.title}: повна сторінка`} loading="lazy" decoding="async" />
+                : <div class="placeholder">Скріншот</div>}
+              <span class="hint" aria-hidden="true">Дивись</span>
+            </div>
+          </a>
+          <div class="tile-body">
+            <p class="type">{p.short}</p>
+            <h3>{p.title}</h3>
+            <p class="desc">{p.description}</p>
+            <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
+          </div>
+        </article>
+      ))}
+    </div>
+  )}
+</section>
+
+<style>
+  .cases { display: grid; gap: clamp(3rem, 7vw, 5.5rem); }
+  .case { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
+
+  .card {
+    display: block; text-decoration: none; color: inherit; overflow: hidden;
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 20px;
+    transition: border-color .25s, transform .25s, box-shadow .25s;
+  }
+  .card:hover { border-color: rgba(255, 210, 0, .55); transform: translateY(-4px); box-shadow: 0 24px 60px rgba(0, 0, 0, .45); }
+  .card:focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+
+  .bar { display: flex; align-items: center; gap: .9rem; padding: .7rem 1rem; border-bottom: 1px solid var(--line); }
+  .dots { display: flex; gap: .4rem; }
+  .dots i { width: 10px; height: 10px; border-radius: 50%; background: rgba(255, 255, 255, .22); }
+  .name { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font: .8rem ui-monospace, Consolas, monospace; letter-spacing: .14em; text-transform: uppercase; }
+  .go { display: grid; place-items: center; width: 38px; height: 38px; border-radius: 50%; border: 1px solid rgba(255, 255, 255, .25); transition: background .2s, color .2s; }
+  .card:hover .go { background: var(--accent); border-color: var(--accent); color: #111; }
+
+  .view { position: relative; overflow: hidden; aspect-ratio: 16 / 9; container-type: size; background: #0b0e13; }
+  .view img {
+    position: absolute; top: 0; left: 0; width: 100%; height: auto; transform: translateY(0);
+    transition: transform 1.2s cubic-bezier(.4, 0, .2, 1); will-change: transform;
+  }
+  .card:hover .view img, .card.is-active .view img {
+    transform: translateY(min(0px, calc(100cqh - 100%)));
+    transition-duration: var(--t, 10s); transition-timing-function: cubic-bezier(.45, .05, .3, 1);
+  }
+  .placeholder { position: absolute; inset: 0; display: grid; place-items: center; color: var(--muted); background: linear-gradient(135deg, #1b2230, #0e1116); }
+  .hint {
+    position: absolute; z-index: 2; left: var(--x, 50%); top: var(--y, 50%);
+    display: grid; place-items: center; width: 84px; height: 84px; border-radius: 50%;
+    background: var(--accent); color: #111; font-weight: 800; font-size: .85rem; pointer-events: none;
+    opacity: 0; transform: translate(-50%, -50%) scale(.6); transition: opacity .2s, transform .2s;
+  }
+  .view:hover .hint { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+
+  .type { color: var(--accent); font-weight: 700; font-size: .8rem; text-transform: uppercase; letter-spacing: .1em; }
+  .body h3 { font-size: clamp(1.4rem, 2.6vw, 2rem); margin: .4rem 0 .8rem; }
+  .desc { color: var(--muted); margin-bottom: 1.25rem; }
+
+  ul { list-style: none; display: grid; gap: .4rem; margin-bottom: 1.25rem; }
+  li { position: relative; padding-left: 1.4rem; font-size: .92rem; }
+  li::before { content: '✓'; position: absolute; left: 0; color: var(--accent); font-weight: 800; }
+  .tags { display: flex; flex-wrap: wrap; gap: .4rem; margin-bottom: 1.5rem; }
+  .tags span { padding: .2rem .7rem; font-size: .75rem; background: rgba(255, 255, 255, .07); border-radius: 999px; }
+
+  /* сітка інших робіт */
+  .more {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: clamp(2rem, 4vw, 3rem) clamp(1.25rem, 3vw, 2rem);
+    margin-top: clamp(3.5rem, 8vw, 6rem); padding-top: clamp(2.5rem, 6vw, 4rem); border-top: 1px solid var(--line);
+  }
+  .tile .card { border-radius: 16px; }
+  .tile .view { aspect-ratio: 16 / 10; }
+  .tile .go { width: 32px; height: 32px; }
+  .tile .hint { width: 70px; height: 70px; font-size: .8rem; }
+  .tile-body { padding: 1.1rem .25rem 0; }
+  .tile-body h3 { font-size: 1.25rem; margin: .3rem 0 .5rem; }
+  .tile-body .desc { font-size: .93rem; margin-bottom: .9rem; }
+  .tile-body .tags { margin-bottom: 0; }
+
+  @media (max-width: 860px) {
+    .case { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 680px) {
+    .more { grid-template-columns: 1fr; }
+  }
+  @media (hover: none) { .hint { display: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .view img, .card:hover .view img, .card.is-active .view img { transition: none; transform: none; }
+  }
+</style>
+
+<script>
+  document.querySelectorAll<HTMLElement>('.card .view').forEach((view) => {
+    view.addEventListener('pointermove', (e) => {
+      const r = view.getBoundingClientRect();
+      view.style.setProperty('--x', `${e.clientX - r.left}px`);
+      view.style.setProperty('--y', `${e.clientY - r.top}px`);
+    });
+  });
+
+  // на телефоні скриншот прокручується, коли картка в центрі екрана
+  if (window.matchMedia('(hover: none)').matches) {
+    const io = new IntersectionObserver(
+      (entries) => entries.forEach((en) => en.target.closest('.card')?.classList.toggle('is-active', en.isIntersecting)),
+      { threshold: 0.6 }
+    );
+    document.querySelectorAll('.card .view').forEach((v) => io.observe(v));
+  }
+</script>

@@ -1,0 +1,89 @@
+---
+import { steps } from '../data/process';
+---
+
+<section class="section container" id="process">
+  <p class="eyebrow">Процес</p>
+  <h2>Як я працюю</h2>
+  <p class="lead">Простий і прозорий процес: ви завжди знаєте, на якому етапі проєкт.</p>
+
+  <ol class="steps">
+    {steps.map((s, i) => (
+      <li class="step" data-reveal style={`--i:${i}`}>
+        <span class="num">{String(i + 1).padStart(2, '0')}</span>
+        <h3>{s.title}</h3>
+        <p>{s.text}</p>
+      </li>
+    ))}
+  </ol>
+</section>
+
+<style>
+  .steps { list-style: none; display: grid; gap: 2.5rem 1.75rem; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+
+  /* лінія над кроком: бліда доріжка + заповнення, яке росте під час прокрутки (--f від 0 до 1) */
+  .step { position: relative; padding-top: 1.5rem; --f: 1; }
+  .step::after {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(var(--text), var(--text)) no-repeat 0 0 / calc(var(--f) * 100%) 100%, var(--line);
+  }
+  .step::before {
+    content: ''; position: absolute; z-index: 1; top: -6px; left: 0; width: 15px; height: 15px; border-radius: 50%;
+    background: var(--text); transition: transform .4s cubic-bezier(.3, 1.6, .5, 1), background .3s;
+  }
+  .num {
+    display: block; margin-bottom: 1rem; font-family: var(--font-head); font-weight: 800; line-height: 1;
+    font-size: clamp(3rem, 6vw, 4.5rem); color: transparent; -webkit-text-stroke: 2px var(--text);
+    transition: color .5s;
+  }
+  .step h3 { margin-bottom: .5rem; font-size: 1.1rem; }
+  .step p { color: var(--muted); font-size: .95rem; }
+
+  /* поки крок не «пройдений», крапка бліда; коли пройдений, цифра заливається */
+  :global(.js) .steps.live .step::before { background: var(--line); transform: scale(.7); }
+  :global(.js) .steps.live .step.on::before { background: var(--text); transform: scale(1); }
+  :global(.js) .steps.live .step.on .num { color: var(--text); }
+</style>
+
+<script>
+  // заповнення ліній кроків пропорційно прокрутці секції
+  const list = document.querySelector<HTMLElement>('.steps');
+  const items = list ? [...list.querySelectorAll<HTMLElement>('.step')] : [];
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  if (list && items.length && !reduce) {
+    list.classList.add('live');
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const vh = window.innerHeight;
+      items.forEach((el, i) => {
+        // на широкому екрані кроки в один ряд: заповнюємо по черзі за прогресом усієї секції;
+        // на вузькому кожен крок заповнюється сам, коли проходить середину екрана
+        const r = el.getBoundingClientRect();
+        const sameRow = items[0].getBoundingClientRect().top === r.top;
+        let f: number;
+        if (sameRow) {
+          const lr = list.getBoundingClientRect();
+          const p = (vh * 0.85 - lr.top) / (vh * 0.5);
+          f = Math.min(Math.max(p * items.length - i, 0), 1);
+        } else {
+          f = Math.min(Math.max((vh * 0.8 - r.top) / (vh * 0.3), 0), 1);
+        }
+        el.style.setProperty('--f', f.toFixed(3));
+        el.classList.toggle('on', f >= 0.98);
+      });
+    };
+
+    const onScroll = () => {
+      if (!ticking) {
+        ticking = true;
+        requestAnimationFrame(update);
+      }
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll);
+    update();
+  }
+</script>

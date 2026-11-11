@@ -1,0 +1,86 @@
+:root {
+  --bg: #0e1116;
+  --bg-soft: #161b22;
+  --bg-deep: #0a0d12;
+  --text: #e6edf3;
+  --muted: #9aa4b2;
+  --accent: #ffd200;
+  --line: rgba(255, 255, 255, .1);
+  --radius: 18px;
+  --max: 1180px;
+  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-head: 'Unbounded Variable', 'Inter Variable', system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; scroll-padding-top: 84px; background: var(--bg); }
+body {
+  font-family: var(--font-body); background: var(--bg); color: var(--text);
+  line-height: 1.6; -webkit-font-smoothing: antialiased; overflow-x: clip;
+}
+h1, h2, h3 { font-family: var(--font-head); line-height: 1.1; letter-spacing: -.02em; font-weight: 700; }
+h2 { font-size: clamp(1.6rem, 3.6vw, 2.7rem); margin-bottom: .75rem; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+.container { width: min(100% - 2rem, var(--max)); margin-inline: auto; }
+.section { padding: clamp(3.5rem, 8vw, 6.5rem) 0; }
+.eyebrow {
+  color: var(--accent); font-weight: 700; letter-spacing: .14em;
+  text-transform: uppercase; font-size: .8rem; margin-bottom: .9rem;
+}
+.lead { color: var(--muted); max-width: 58ch; margin: 0 0 2.5rem; font-size: 1.05rem; }
+
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: .5rem;
+  padding: .65rem 1.25rem; border: 2px solid var(--accent); background: var(--accent); color: #111; font-size: .95rem;
+  font-weight: 700; border-radius: 12px; text-decoration: none; cursor: pointer;
+  transition: transform .2s, background .2s;
+}
+.btn:hover { transform: translateY(-2px); background: #ffe14d; }
+.btn--ghost { background: transparent; color: var(--text); }
+.btn--ghost:hover { background: rgba(255, 210, 0, .12); }
+
+/* ---- Фони секцій: сторінка ділиться на «екрани» ---- */
+.band { position: relative; isolation: isolate; }
+.band--soft { background: #161b22; --bg-soft: #0e1116; }
+.band--yellow {
+  background: var(--accent); color: #111;
+  --text: #111; --muted: rgba(17, 17, 17, .72); --bg-soft: rgba(17, 17, 17, .07); --line: rgba(17, 17, 17, .25);
+}
+.band--yellow .eyebrow { color: #111; opacity: .75; }
+.band--grain::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ---- Поява блоків при прокрутці ---- */
+.js [data-reveal] {
+  opacity: 0; transform: translateY(26px);
+  transition: opacity .7s ease, transform .7s ease; transition-delay: calc(var(--i, 0) * 80ms);
+}
+.js [data-reveal].in { opacity: 1; transform: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  .js [data-reveal] { opacity: 1; transform: none; transition: none; }
+}
+/* ---- Підсвітка карток за курсором (клас .spot) ---- */
+.spot { position: relative; isolation: isolate; --spot: 255, 210, 0; }
+@media (hover: hover) {
+  /* світла пляма всередині картки */
+  .spot::after {
+    content: ''; position: absolute; inset: 0; z-index: -1; border-radius: inherit; pointer-events: none;
+    background: radial-gradient(380px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--spot), .09), transparent 65%);
+    opacity: 0; transition: opacity .35s;
+  }
+  /* яскрава рамка біля курсора */
+  .spot::before {
+    content: ''; position: absolute; inset: 0; z-index: 2; border-radius: inherit; pointer-events: none; padding: 1px;
+    background: radial-gradient(220px circle at var(--mx, 50%) var(--my, 50%), rgba(var(--spot), .85), transparent 70%);
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor; mask-composite: exclude;
+    opacity: 0; transition: opacity .35s;
+  }
+  .spot:hover::after, .spot:hover::before { opacity: 1; }
+}

@@ -1,0 +1,90 @@
+---
+import { site } from '../data/site';
+
+const links = [
+  { href: '/#portfolio', label: 'Портфоліо' },
+  { href: '/#services', label: 'Послуги' },
+  { href: '/#process', label: 'Як я працюю' },
+  { href: '/#why', label: 'Переваги' },
+  { href: '/#faq', label: 'Питання' },
+  { href: '/#contact', label: 'Контакти' },
+];
+---
+
+<header class="header">
+  <div class="container bar">
+    <a class="logo" href="/" aria-label={`${site.name}: на головну`}>
+      {site.logo
+        ? <img src={site.logo} alt={site.name} width="172" height="40" loading="eager" fetchpriority="high" decoding="async" />
+        : <span class="logo-text">{site.name}</span>}
+    </a>
+
+    <button class="burger" aria-label="Відкрити меню" aria-expanded="false" aria-controls="menu">
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="menu" class="menu">
+      <ul>
+        {links.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+      </ul>
+      <a class="btn" href={site.telegram} target="_blank" rel="noopener">Написати в Telegram</a>
+    </nav>
+  </div>
+</header>
+
+<style>
+  .header {
+    position: sticky; top: 0; z-index: 50;
+    background: rgba(14, 17, 22, .85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(255, 255, 255, .08);
+  }
+  .bar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; min-height: 68px; }
+
+  .logo { display: inline-flex; align-items: center; text-decoration: none; }
+  .logo img { width: auto; height: 40px; }
+  .logo-text { font-family: var(--font-head); font-weight: 800; font-size: 1.15rem; color: var(--accent); }
+
+  .menu { display: flex; align-items: center; gap: 1.5rem; }
+  .menu ul { display: flex; gap: 1.5rem; list-style: none; }
+  .menu ul a { color: var(--muted); text-decoration: none; transition: color .2s; }
+  .menu ul a:hover { color: var(--text); }
+  .burger {
+    display: none; width: 44px; height: 44px; background: none; border: 0; cursor: pointer;
+    flex-direction: column; justify-content: center; align-items: center; gap: 5px;
+  }
+  .burger span { width: 24px; height: 2px; background: var(--text); border-radius: 2px; }
+  .menu .btn { padding: .4rem .9rem; font-size: .85rem; border-radius: 10px; }
+
+  @media (max-width: 1000px) {
+    .burger { display: flex; }
+    .menu {
+      display: none; position: absolute; inset: 68px 0 auto 0;
+      flex-direction: column; align-items: stretch; gap: 1rem;
+      padding: 1.25rem 1rem 1.5rem; background: var(--bg-soft);
+      border-bottom: 1px solid rgba(255, 255, 255, .08);
+    }
+    .menu.open { display: flex; }
+    .menu ul { flex-direction: column; gap: .25rem; }
+    .menu ul a { display: block; padding: .75rem 0; font-size: 1.1rem; }
+    .menu .btn { justify-content: center; padding: .7rem 1rem; font-size: .95rem; }
+  }
+</style>
+
+<script>
+  const btn = document.querySelector<HTMLButtonElement>('.burger');
+  const menu = document.getElementById('menu');
+
+  const setOpen = (open: boolean) => {
+    menu?.classList.toggle('open', open);
+    btn?.setAttribute('aria-expanded', String(open));
+  };
+
+  btn?.addEventListener('click', () => setOpen(!menu?.classList.contains('open')));
+
+  // закриваємо меню після кліку по пункту та клавішею Escape
+  menu?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setOpen(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setOpen(false);
+  });
+</script>

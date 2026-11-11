@@ -1,0 +1,89 @@
+---
+import { site } from '../data/site';
+import { why, reviews } from '../data/content';
+---
+
+<section class="section container" id="why">
+  <div class="wrap">
+    <div class="dev" data-reveal aria-hidden="true">
+      <div class="bar"><i></i><i></i><i></i><span>your-site.ts</span></div>
+      <pre><code><span class="tk-c">// що ви отримуєте</span>
+<span class="tk-k">const</span> <span class="tk-n">yourSite</span> <span class="tk-o">=</span> {'{'}
+{why.card.map(([key, val]) => (
+  <span>  <span class="tk-p">{key}</span>: <span class="tk-s">'{val}'</span>,{'\n'}</span>
+))}  <span class="tk-p">ready</span>: <span class="tk-b">true</span>,
+{'}'};</code></pre>
+      <div class="status"><i></i> Приймаю нові проєкти</div>
+    </div>
+
+    <div class="text" data-reveal style="--i:1">
+      <p class="eyebrow">Переваги</p>
+      <h2>{why.title}</h2>
+      <p class="intro">{why.lead}</p>
+
+      <ul class="points">
+        {why.points.map((p) => (
+          <li class="spot"><strong>{p.title}</strong><span>{p.text}</span></li>
+        ))}
+      </ul>
+
+      <a class="btn" href="#contact">Обговорити проєкт</a>
+    </div>
+  </div>
+
+  {reviews.length > 0 && (
+    <div class="reviews">
+      {reviews.map((r, i) => (
+        <blockquote data-reveal style={`--i:${i}`}>
+          <p>“{r.text}”</p>
+          <footer><strong>{r.name}</strong><span>{r.role}</span></footer>
+        </blockquote>
+      ))}
+    </div>
+  )}
+</section>
+
+<style>
+  .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(2rem, 6vw, 4.5rem); align-items: start; }
+
+  .dev {
+    position: sticky; top: 100px; border-radius: 18px; overflow: hidden;
+    background: rgba(17, 22, 29, .95); border: 1px solid var(--line);
+    box-shadow: 14px 14px 0 var(--accent);
+  }
+  .bar { display: flex; align-items: center; gap: .4rem; padding: .7rem 1rem; border-bottom: 1px solid var(--line); }
+  .bar i { width: 10px; height: 10px; border-radius: 50%; background: #ff5f57; }
+  .bar i:nth-child(2) { background: #febc2e; }
+  .bar i:nth-child(3) { background: #28c840; }
+  .bar span { margin-left: .75rem; color: var(--muted); font: .8rem ui-monospace, Consolas, monospace; }
+  pre { margin: 0; padding: 1.25rem 1.4rem; overflow-x: auto; font: .88rem/1.8 ui-monospace, SFMono-Regular, Consolas, monospace; }
+  /* підсвітка синтаксису: префікс tk-, щоб не перетинатись з іншими класами */
+  .tk-c { color: #6b7685; } .tk-k { color: #ff7b72; } .tk-n { color: #79c0ff; }
+  .tk-o { color: var(--muted); } .tk-p { color: #d2a8ff; } .tk-s { color: #a5d6a7; } .tk-b { color: var(--accent); }
+  .status { display: flex; align-items: center; gap: .6rem; padding: .85rem 1.4rem; border-top: 1px solid var(--line); font-size: .85rem; font-weight: 600; }
+  .status i { width: 9px; height: 9px; border-radius: 50%; background: #28c840; animation: pulse 2s infinite; }
+  @keyframes pulse { to { box-shadow: 0 0 0 9px rgba(40, 200, 64, 0); } }
+
+  .intro { color: var(--muted); margin-bottom: 2rem; max-width: 52ch; }
+  .points { list-style: none; display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; margin-bottom: 2rem; }
+  .points li {
+    display: grid; gap: .35rem; align-content: start; padding: 1.2rem 1.3rem;
+    background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px;
+    border-top: 3px solid var(--accent);
+  }
+  .points strong { font-size: 1rem; line-height: 1.3; }
+  .points span { color: var(--muted); font-size: .9rem; }
+
+  .reviews { display: grid; gap: 1.25rem; margin-top: 4rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); }
+  blockquote { padding: 1.6rem; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 18px; }
+  blockquote p { margin-bottom: 1rem; }
+  blockquote footer strong { display: block; }
+  blockquote footer span { color: var(--muted); font-size: .85rem; }
+
+  @media (max-width: 860px) {
+    .wrap { grid-template-columns: 1fr; }
+    .dev { position: static; box-shadow: 9px 9px 0 var(--accent); }
+  }
+  @media (max-width: 540px) { .points { grid-template-columns: 1fr; } }
+  @media (prefers-reduced-motion: reduce) { .status i { animation: none; } }
+</style>
