@@ -5,12 +5,11 @@ export const site = {
   logo: '/portfolio/logo.webp',
   telegram: `https://t.me/${telegramUser}`,
   telegramHandle: `@${telegramUser}`,
-  // TODO: замінити на окрему пошту студії. Після заміни створіть новий formKey на web3forms.com на цю адресу.
-  email: 'anton-ruban@ukr.net',
+  email: 'ruban_web_studio@ukr.net',
   phone: '+380958702674',
   phoneLabel: '+38 (095) 870-26-74',
-  /** ключ Web3Forms: заявки з форми приходять на пошту, на яку він створений */
-  formKey: '13b43453-3360-4747-86a1-3cd3b388a733',
+  /** ключ Web3Forms: заявки з форми приходять на пошту, на яку він створений (ruban_web_studio@ukr.net) */
+  formKey: 'a942b5d7-3f46-451f-bea0-3f8060569501',
   /** ID Google Analytics 4 (вигляд G-XXXXXXXXXX). Порожньо: аналітика не підключається */
   gaId: '',
 };
