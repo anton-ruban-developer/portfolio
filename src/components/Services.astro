@@ -1,30 +1,44 @@
 ---
 import { useT } from '../i18n';
+import { promoEnd } from '../data/site';
 
 const { t } = useT(Astro.currentLocale);
 const st = t.services;
+// акцію не рендеримо, якщо сайт зібрано вже після її кінця; якщо до, то її сховає скрипт нижче
+const promoActive = Date.now() < promoEnd.getTime();
 ---
 
-<section class="section container" id="services">
+<section class="section container" id="services" data-promo-end={promoEnd.toISOString()}>
   <p class="eyebrow">{st.eyebrow}</p>
   <h2>{st.title}</h2>
   <p class="lead">{st.lead}</p>
 
   <div class="grid">
     {st.items.map((s, i) => (
-      <article class:list={['card', 'spot', { popular: s.popular }]} data-reveal style={`--i:${i}`}>
+      <article
+        class:list={['card', 'spot', { popular: s.popular, promo: promoActive && s.promoPrice }]}
+        data-reveal style={`--i:${i}`}
+      >
         {s.popular && <span class="badge">{st.popular}</span>}
+        {promoActive && s.promoPrice && <span class="badge promo-badge">{st.promoBadge}</span>}
         <h3>{s.title}</h3>
         <p class="for">{s.forWho}</p>
         <ul>{s.features.map((f) => <li>{f}</li>)}</ul>
         <div class="meta">
           <div><span class="label">{st.term}</span><strong>{s.term}</strong></div>
-          <div><span class="label">{st.price}</span><strong>{s.price}</strong></div>
+          <div>
+            <span class="label">{st.price}</span>
+            {promoActive && s.promoPrice
+              ? <><s class="old">{s.price}</s><strong class="promo-price">{s.promoPrice}</strong><strong class="base-price">{s.price}</strong></>
+              : <strong>{s.price}</strong>}
+          </div>
         </div>
         <a class="btn" href="#contact" data-service={s.title}>{t.ui.discuss}</a>
       </article>
     ))}
   </div>
+
+  <p class="extras">{st.extras}</p>
 </section>
 
 <style>
@@ -58,9 +72,27 @@ const st = t.services;
     background: #111; color: var(--accent); font-size: .75rem; font-weight: 800;
   }
 
+  /* акція */
+  .promo-badge { left: auto; right: 1.5rem; background: #ff5a3c; color: #fff; }
+  .old { display: block; color: var(--muted); font-size: .85rem; }
+  .promo-price { color: var(--accent); }
+  .card.popular .promo-price { color: #111; }
+  .base-price { display: none; }
+  /* акція закінчилась (клас знімає скрипт): звичайна ціна */
+  .card:not(.promo) .old, .card:not(.promo) .promo-price, .card:not(.promo) .promo-badge { display: none; }
+  .card:not(.promo) .base-price { display: inline; }
+
+  .extras { margin-top: 2rem; max-width: 70ch; color: var(--muted); font-size: .92rem; }
+
   @media (max-width: 760px) { .card.popular { transform: none; } }
 </style>
 <script>
+  // акція закінчилась, а сайт ще не перезібрали: прибираємо знижку (дата з data-promo-end)
+  const promoEndAt = Date.parse(document.getElementById('services')?.dataset.promoEnd ?? '');
+  if (Date.now() > promoEndAt) {
+    document.querySelectorAll('#services .card.promo').forEach((c) => c.classList.remove('promo'));
+  }
+
   // підставляємо обраний тариф у форму заявки
   document.querySelectorAll<HTMLAnchorElement>('a[data-service]').forEach((a) =>
     a.addEventListener('click', () => {

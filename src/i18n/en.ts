@@ -5,7 +5,7 @@ const en: Dict = {
   meta: {
     title: 'Freelance Web Developer for Small Business Websites | Ruban Web Studio',
     description:
-      'Landing pages, small business websites and corporate sites built turnkey on WordPress or custom code. Fast, mobile-friendly and SEO-ready. 10+ projects for clients in the US and Ukraine.',
+      'Landing pages, small business websites and multi-page websites built turnkey on WordPress or custom code. Fast, mobile-friendly and SEO-ready. 10+ projects for clients in the US and Ukraine.',
   },
   city: 'Kharkiv, Ukraine',
   nav: {
@@ -28,13 +28,13 @@ const en: Dict = {
     eyebrow: 'Website development · Kharkiv, Ukraine',
     lead: ['Websites', 'that'],
     accent: ['win', 'clients'],
-    text: 'Turnkey landing pages, small business websites and corporate sites: fast, mobile-friendly and ready for search.',
+    text: 'Turnkey landing pages, small business websites and multi-page websites: fast, mobile-friendly and ready for search.',
     viewWork: 'See my work',
     chip: 'Real project',
   },
   stats: [
     { value: '10+', unit: 'sites', label: 'launched for clients' },
-    { value: '2', unit: 'years', label: 'of WordPress development' },
+    { value: '1', unit: 'month', label: 'of free support' },
     { value: '3–5', unit: 'days', label: 'to launch a landing page' },
     { value: '100%', unit: '', label: 'mobile-friendly' },
   ],
@@ -51,7 +51,7 @@ const en: Dict = {
     projects: {
       revival: {
         short: 'Judo club, Kharkiv',
-        type: 'Corporate website on WordPress',
+        type: 'Multi-page website on WordPress',
         description:
           'A sports club website with class schedule, grading syllabus and photo gallery. Moved from a site builder to a custom theme for speed and easy updates.',
         results: [
@@ -82,9 +82,9 @@ const en: Dict = {
       },
       pawn: {
         short: 'Pawn shop chain, Texas',
-        type: 'Corporate website',
+        type: 'Multi-page website',
         description: 'Four locations, a catalog of accepted items, online item appraisal and a loyalty program.',
-        tags: ['Corporate website', 'Online appraisal', 'Local SEO'],
+        tags: ['Multi-page website', 'Online appraisal', 'Local SEO'],
       },
     },
   },
@@ -95,6 +95,8 @@ const en: Dict = {
     popular: 'Most popular',
     term: 'Timeline',
     price: 'Price',
+    promoBadge: '−20% until December 31',
+    extras: 'Domain and hosting are paid separately, usually about $50–120 per year. I will help you choose a provider and set everything up.',
     items: [
       {
         title: 'Landing page',
@@ -124,7 +126,7 @@ const en: Dict = {
         popular: true,
       },
       {
-        title: 'Corporate website',
+        title: 'Multi-page website',
         forWho: 'For companies with several lines of business',
         features: [
           'Multiple pages: services, about, case studies, contacts',
@@ -135,6 +137,7 @@ const en: Dict = {
         ],
         term: '1–2 weeks',
         price: 'from $500',
+        promoPrice: 'from $400',
       },
     ],
   },
@@ -175,12 +178,12 @@ const en: Dict = {
     lead: 'Didn’t find an answer? Send me a message and I’ll reply personally.',
     ask: 'Ask on Telegram',
     items: [
-      { q: 'How long does it take to build a website?', a: 'A landing page usually takes 3–5 days, a business website 3–7 days, a corporate site 1–2 weeks. I give you an exact timeline after the brief.' },
+      { q: 'How long does it take to build a website?', a: 'A landing page usually takes 3–5 days, a business website 3–7 days, a multi-page website 1–2 weeks. I give you an exact timeline after the brief.' },
       { q: 'How does payment work?', a: 'We work under a contract with staged payments: a deposit before we start and the rest once you approve the result. Details are agreed individually.' },
       { q: 'What do you need from me to get started?', a: 'A short description of your business, texts and photos (if you have them), and examples of websites you like. No materials yet? I’ll help with the structure and copy.' },
       { q: 'Who will update the site after launch?', a: 'I will. Just tell me what to change, whether it’s text, prices, photos or a new section, and I’ll update the site. You don’t need to learn any admin panel.' },
-      { q: 'Who buys the domain and hosting?', a: 'I recommend registering them in your name so the site always belongs to you. I’ll help you choose a plan and set everything up.' },
-      { q: 'Do you offer support after launch?', a: 'Yes. You can order edits and updates as needed or agree on monthly support. We discuss the terms separately.' },
+      { q: 'Who buys the domain and hosting?', a: 'I recommend registering them in your name so the site always belongs to you. I’ll help you choose a plan and set everything up. It usually costs about $50–120 per year.' },
+      { q: 'Do you offer support after launch?', a: 'Yes. The first month after launch is free: I fix any issues and make small edits. After that, you can order edits as needed or agree on monthly support.' },
     ],
   },
   contact: {
@@ -209,7 +212,7 @@ const en: Dict = {
     },
   },
   footer: {
-    about: 'Turnkey websites for business: landing pages, small business websites and corporate sites.',
+    about: 'Turnkey websites for business: landing pages, small business websites and multi-page websites.',
     navLabel: 'Footer navigation',
     sections: 'Sections',
     contacts: 'Contacts',

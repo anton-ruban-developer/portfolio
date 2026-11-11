@@ -7,6 +7,8 @@ export interface Service {
   features: string[];
   term: string;
   price: string;
+  /** ціна зі знижкою на час акції (site.promoUntil); після дати показується звичайна price */
+  promoPrice?: string;
   popular?: boolean;
 }
 
@@ -72,6 +74,10 @@ export interface Dict {
     popular: string;
     term: string;
     price: string;
+    /** плашка акції, напр. «−20% до 31 грудня» */
+    promoBadge: string;
+    /** примітка під тарифами: що оплачується окремо */
+    extras: string;
     items: Service[];
   };
   process: {
