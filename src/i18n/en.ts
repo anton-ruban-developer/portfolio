@@ -5,17 +5,7 @@ const en: Dict = {
   meta: {
     title: 'Freelance Web Developer for Small Business Websites | Ruban Web Studio',
     description:
-      'Landing pages, small business websites and corporate sites built turnkey on WordPress or custom code. Fast, mobile-friendly and SEO-ready. 25+ projects for clients in the US and Ukraine.',
-    keywords: [
-      'freelance web developer',
-      'website development',
-      'small business website',
-      'landing page development',
-      'WordPress developer',
-      'custom website design',
-      'web developer Ukraine',
-      'affordable website for small business',
-    ],
+      'Landing pages, small business websites and corporate sites built turnkey on WordPress or custom code. Fast, mobile-friendly and SEO-ready. 10+ projects for clients in the US and Ukraine.',
   },
   city: 'Kharkiv, Ukraine',
   nav: {
@@ -43,7 +33,7 @@ const en: Dict = {
     chip: 'Real project',
   },
   stats: [
-    { value: '25+', unit: 'sites', label: 'launched for clients' },
+    { value: '10+', unit: 'sites', label: 'launched for clients' },
     { value: '2', unit: 'years', label: 'of WordPress development' },
     { value: '3–5', unit: 'days', label: 'to launch a landing page' },
     { value: '100%', unit: '', label: 'mobile-friendly' },
@@ -82,7 +72,7 @@ const en: Dict = {
         short: 'Skin care clinic, New York',
         type: 'Multi-page website on WordPress',
         description: '30+ treatments across seven categories, two locations, a before/after gallery and a free consultation form.',
-        tags: ['WordPress', 'Elementor', 'Lead generation'],
+        tags: ['WordPress', 'Elementor', 'Lead form'],
       },
       carwrapping: {
         short: 'Car wrap studio, Arizona',
@@ -174,7 +164,7 @@ const en: Dict = {
     ],
     points: [
       { title: 'Direct, no account managers', text: 'You talk to the person who builds your site. Questions get answered in minutes, not passed down a chain.' },
-      { title: 'Hand-written code, no bloat', text: 'The site stays fast and does not break after updates, because there is nothing unnecessary in it.' },
+      { title: 'No bloat', text: 'I only add the plugins and tools a site actually needs, so it stays fast and does not break after updates.' },
       { title: 'Clear timeline and price', text: 'We fix the price and timeline before we start. I share progress along the way, so there are no surprises.' },
       { title: 'The site is fully yours', text: 'Domain, hosting and all access are registered in your name. I help with edits after launch.' },
     ],
@@ -203,12 +193,15 @@ const en: Dict = {
       namePh: 'How should I address you',
       contact: 'Telegram or phone',
       contactPh: '@username or phone number',
+      contactHint: 'Enter your Telegram (@username), phone number or email',
       project: 'What you need',
       other: 'Something else / not sure',
       message: 'About your project',
       messagePh: 'Optional',
       submit: 'Send request',
       consent: 'By clicking the button, you agree to the processing of your data so I can contact you.',
+      privacyLink: 'Privacy policy',
+      wait: 'Your request has already been sent. If you want to add something, message me on Telegram.',
       sending: 'Sending…',
       success: 'Thank you! Your request has been received. I’ll get back to you shortly.',
       error: 'Something went wrong. Please message me on Telegram.',
@@ -224,6 +217,24 @@ const en: Dict = {
     worldwide: 'I work with clients across Ukraine and abroad.',
     rights: 'All rights reserved.',
     up: 'Back to top',
+    privacy: 'Privacy policy',
+  },
+  privacy: {
+    title: 'Privacy policy',
+    description: 'What data the Ruban Web Studio website collects, why, and how to have it deleted.',
+    updated: 'Updated: November 2026',
+    intro: 'A short, plain-language description of what data reaches me through this website and what happens to it.',
+    sections: [
+      { title: 'What I receive', text: 'Only what you enter in the contact form: your name, a way to reach you (Telegram, phone or email), the project type and a description of the task. If you message me on Telegram, call or email, I see the details that service shares.' },
+      { title: 'Why', text: 'To reply to your request, clarify the task and prepare a quote. I do not send newsletters and do not share your data with third parties for advertising.' },
+      { title: 'How the form is delivered', text: 'The form is sent through Web3Forms, which forwards the request to my email. The service receives this data only to deliver the message.' },
+      { title: 'How long it is kept', text: 'Our correspondence is kept while we work on the project and maintain the site. I will delete your data on request.' },
+      { title: 'What your browser stores', text: 'After you submit the form, your browser remembers when it was sent, to protect the form from repeated and automated submissions. It is not used for tracking.' },
+    ],
+    analytics: { title: 'Analytics', text: 'The site uses Google Analytics to count visits and see which sections are useful. The data is anonymized. You can block analytics in your browser settings or with an ad blocker.' },
+    contactTitle: 'Contact',
+    contactText: 'To find out what data I have about you, correct it or delete it, contact me in any way:',
+    back: '← Back to home',
   },
 };
 

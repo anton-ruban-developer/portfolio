@@ -21,11 +21,10 @@ export interface ProjectText {
 }
 
 export interface Dict {
-  /** SEO: заголовок вкладки, опис для пошуку та ключові запити цієї мови */
+  /** SEO: заголовок вкладки, опис для пошуку */
   meta: {
     title: string;
     description: string;
-    keywords: string[];
   };
   city: string;
   nav: {
@@ -106,12 +105,17 @@ export interface Dict {
       namePh: string;
       contact: string;
       contactPh: string;
+      /** підказка, якщо контакт введено в незрозумілому форматі */
+      contactHint: string;
       project: string;
       other: string;
       message: string;
       messagePh: string;
       submit: string;
       consent: string;
+      privacyLink: string;
+      /** повторна заявка раніше ніж за хвилину */
+      wait: string;
       sending: string;
       success: string;
       error: string;
@@ -127,5 +131,18 @@ export interface Dict {
     worldwide: string;
     rights: string;
     up: string;
+    privacy: string;
+  };
+  privacy: {
+    title: string;
+    description: string;
+    updated: string;
+    intro: string;
+    sections: { title: string; text: string }[];
+    /** показується, тільки якщо підключено Google Analytics (site.gaId) */
+    analytics: { title: string; text: string };
+    contactTitle: string;
+    contactText: string;
+    back: string;
   };
 }

@@ -1,6 +1,11 @@
 import type { APIRoute } from 'astro';
 
+// Поки в astro.config не задано домен (site), закриваємо сайт від пошуковиків,
+// щоб у видачу не потрапила тимчасова адреса.
 export const GET: APIRoute = ({ site, url }) =>
-  new Response(`User-agent: *\nAllow: /\n\nSitemap: ${new URL('/sitemap.xml', site ?? url).href}\n`, {
-    headers: { 'Content-Type': 'text/plain; charset=utf-8' },
-  });
+  new Response(
+    site
+      ? `User-agent: *\nAllow: /\n\nSitemap: ${new URL('/sitemap.xml', site).href}\n`
+      : `User-agent: *\nDisallow: /\n`,
+    { headers: { 'Content-Type': 'text/plain; charset=utf-8' } }
+  );

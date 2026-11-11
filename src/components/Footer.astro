@@ -1,8 +1,8 @@
 ---
-import { site } from '../data/site';
-import { useT } from '../i18n';
+import { site, emailEncoded, emailMasked } from '../data/site';
+import { useT, localizePath } from '../i18n';
 
-const { t, home } = useT(Astro.currentLocale);
+const { lang, t, home } = useT(Astro.currentLocale);
 const year = new Date().getFullYear();
 const nav = [
   { href: `${home}#portfolio`, label: t.nav.portfolio },
@@ -15,7 +15,7 @@ const nav = [
 const contacts = [
   { label: 'Telegram', value: site.telegramHandle, href: site.telegram, ext: true },
   { label: t.contact.phone, value: site.phoneLabel, href: `tel:${site.phone}` },
-  { label: 'Email', value: site.email, href: `mailto:${site.email}` },
+  { label: 'Email', value: emailMasked, href: '#contact', email: emailEncoded },
 ];
 ---
 
@@ -45,9 +45,9 @@ const contacts = [
       <ul class="contacts">
         {contacts.map((c) => (
           <li>
-            <a href={c.href} target={c.ext ? '_blank' : undefined} rel={c.ext ? 'noopener' : undefined}>
+            <a href={c.href} target={c.ext ? '_blank' : undefined} rel={c.ext ? 'noopener' : undefined} data-email={c.email}>
               <span class="k">{c.label}</span>
-              <span class="v">{c.value}</span>
+              <span class="v" data-email-text={c.email ? true : undefined}>{c.value}</span>
               <span class="arr" aria-hidden="true">↗</span>
             </a>
           </li>
@@ -67,7 +67,7 @@ const contacts = [
   </div>
 
   <div class="container bottom">
-    <p>© {year} {site.name}. {t.footer.rights}</p>
+    <p>© {year} {site.name}. {t.footer.rights} <a class="privacy" href={localizePath(lang, '/privacy/')}>{t.footer.privacy}</a></p>
     <a class="up" href="#top" aria-label={t.footer.up}>{t.footer.up} <span aria-hidden="true">↑</span></a>
   </div>
 </footer>
@@ -154,6 +154,8 @@ const contacts = [
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem;
     padding: 1.5rem 0 2rem; color: var(--muted); font-size: .85rem;
   }
+  .privacy { margin-left: .5rem; color: var(--muted); }
+  .privacy:hover { color: var(--accent); }
   .up {
     display: inline-flex; align-items: center; gap: .5rem; padding: .45rem .95rem; border-radius: 999px;
     border: 1px solid rgba(255, 255, 255, .15); color: var(--text); text-decoration: none; transition: border-color .2s, color .2s;

@@ -1,0 +1,51 @@
+---
+// Політика конфіденційності. Одна для всіх мов: тексти зі словника (t.privacy),
+// адреси: /privacy/, /ru/privacy/, /en/privacy/
+import Layout from '../layouts/Layout.astro';
+import { site, emailEncoded, emailMasked } from '../data/site';
+import { useT } from '../i18n';
+
+const { t, home } = useT(Astro.currentLocale);
+const p = t.privacy;
+// розділ про аналітику показуємо, тільки якщо вона справді підключена
+const sections = site.gaId ? [...p.sections, p.analytics] : p.sections;
+---
+
+<Layout title={`${p.title} | ${site.name}`} description={p.description}>
+  <main class="section container doc">
+    <a class="back" href={home}>{p.back}</a>
+    <h1>{p.title}</h1>
+    <p class="updated">{p.updated}</p>
+    <p class="intro">{p.intro}</p>
+
+    {sections.map((s) => (
+      <section>
+        <h2>{s.title}</h2>
+        <p>{s.text}</p>
+      </section>
+    ))}
+
+    <section>
+      <h2>{p.contactTitle}</h2>
+      <p>{p.contactText}</p>
+      <ul>
+        <li>Telegram: <a href={site.telegram} target="_blank" rel="noopener">{site.telegramHandle}</a></li>
+        <li>Email: <a href={home} data-email={emailEncoded}>{emailMasked}</a></li>
+      </ul>
+    </section>
+  </main>
+</Layout>
+
+<style>
+  .doc { max-width: 760px; }
+  .back { display: inline-block; margin-bottom: 2rem; color: var(--muted); text-decoration: none; }
+  .back:hover { color: var(--accent); }
+  h1 { font-size: clamp(1.8rem, 4.5vw, 2.8rem); margin-bottom: .75rem; overflow-wrap: anywhere; }
+  .updated { color: var(--muted); font-size: .9rem; margin-bottom: 2rem; }
+  .intro { font-size: 1.1rem; margin-bottom: 2.5rem; }
+  section + section, .intro + section { margin-top: 2rem; }
+  h2 { font-size: 1.25rem; margin-bottom: .6rem; }
+  p, li { color: var(--muted); }
+  ul { margin-top: .75rem; padding-left: 1.2rem; display: grid; gap: .35rem; }
+  li a { color: var(--accent); }
+</style>

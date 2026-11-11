@@ -1,8 +1,9 @@
 ---
-import { site } from '../data/site';
-import { useT } from '../i18n';
+import { site, emailEncoded, emailMasked } from '../data/site';
+import { useT, localizePath } from '../i18n';
 
-const { t } = useT(Astro.currentLocale);
+const { lang, t } = useT(Astro.currentLocale);
+const privacyHref = localizePath(lang, '/privacy/');
 const f = t.contact.form;
 ---
 
@@ -24,8 +25,8 @@ const f = t.contact.form;
           </a>
         </li>
         <li>
-          <a href={`mailto:${site.email}`}>
-            <span class="k">Email</span><strong>{site.email}</strong><i>→</i>
+          <a href="#contact" data-email={emailEncoded}>
+            <span class="k">Email</span><strong data-email-text>{emailMasked}</strong><i>→</i>
           </a>
         </li>
       </ul>
@@ -34,7 +35,7 @@ const f = t.contact.form;
     {site.formKey && (
       <form
         id="lead-form" class="form" novalidate
-        data-sending={f.sending} data-success={f.success} data-error={f.error} data-network={f.network}
+        data-sending={f.sending} data-wait={f.wait} data-success={f.success} data-error={f.error} data-network={f.network}
       >
         <input type="hidden" name="access_key" value={site.formKey} />
         <input type="hidden" name="subject" value={f.subject} />
@@ -43,12 +44,15 @@ const f = t.contact.form;
 
         <label>
           {f.name}
-          <input type="text" name="name" required autocomplete="name" placeholder={f.namePh} />
+          <input type="text" name="name" required maxlength="80" autocomplete="name" placeholder={f.namePh} />
         </label>
 
         <label>
           {f.contact}
-          <input type="text" name="contact" required placeholder={f.contactPh} />
+          <input
+            type="text" name="contact" required maxlength="64" placeholder={f.contactPh} title={f.contactHint}
+            pattern="\s*(@?[A-Za-z0-9_]{4,32}|\+?[0-9\s\(\)\-]{9,20}|[^\s@]+@[^\s@]+\.[^\s@]+)\s*"
+          />
         </label>
 
         <label>
@@ -61,12 +65,12 @@ const f = t.contact.form;
 
         <label>
           {f.message}
-          <textarea name="message" rows="4" placeholder={f.messagePh}></textarea>
+          <textarea name="message" rows="4" maxlength="2000" placeholder={f.messagePh}></textarea>
         </label>
 
         <button class="btn" type="submit">{f.submit}</button>
         <p id="lead-status" class="status" role="status" aria-live="polite"></p>
-        <p class="note">{f.consent}</p>
+        <p class="note">{f.consent} <a href={privacyHref}>{f.privacyLink}</a></p>
       </form>
     )}
   </div>
@@ -110,6 +114,7 @@ const f = t.contact.form;
   .status.ok { color: #28c840; }
   .status.err { color: #ff6b6b; }
   .note { color: var(--muted); font-size: .8rem; }
+  .note a { color: var(--text); }
 
   @media (max-width: 800px) {
     .wrap { grid-template-columns: 1fr; }
@@ -130,26 +135,57 @@ const f = t.contact.form;
     status.className = `status ${kind}`;
   };
 
+  // Захист від ботів (разом із прихованим полем botcheck, яке перевіряє і сам Web3Forms):
+  // боти заповнюють форму миттєво й відправляють її багато разів поспіль.
+  const MIN_FILL_MS = 3000; // людина не встигне заповнити форму швидше
+  const COOLDOWN_MS = 60_000; // пауза між заявками з одного браузера
+  const COOLDOWN_KEY = 'lead-sent-at';
+  const openedAt = Date.now();
+
+  const lastSent = () => {
+    try { return Number(localStorage.getItem(COOLDOWN_KEY)) || 0; } catch { return 0; }
+  };
+  const markSent = () => {
+    try { localStorage.setItem(COOLDOWN_KEY, String(Date.now())); } catch { /* приватний режим */ }
+  };
+
   form?.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!form.checkValidity()) {
       form.reportValidity();
       return;
     }
+
+    // бот: заповнив пастку або впорався надто швидко. Показуємо «успіх», але нічого не відправляємо
+    const trap = form.querySelector<HTMLInputElement>('input[name="botcheck"]');
+    if (trap?.checked || Date.now() - openedAt < MIN_FILL_MS) {
+      form.reset();
+      show(msg('success'), 'ok');
+      return;
+    }
+    if (Date.now() - lastSent() < COOLDOWN_MS) {
+      show(msg('wait'), 'err');
+      return;
+    }
+
     const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (btn) btn.disabled = true;
     show(msg('sending'), '');
 
     try {
+      const data = Object.fromEntries(new FormData(form)) as Record<string, string>;
+      for (const k of ['name', 'contact', 'message']) data[k] = (data[k] ?? '').trim();
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-        body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        body: JSON.stringify(data),
       });
       const json = await res.json();
       if (res.ok && json.success) {
         form.reset();
+        markSent();
         show(msg('success'), 'ok');
+        (window as any).gtag?.('event', 'generate_lead', { form: 'contact' });
       } else {
         show(msg('error'), 'err');
       }
