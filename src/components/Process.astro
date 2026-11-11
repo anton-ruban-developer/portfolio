@@ -1,14 +1,17 @@
 ---
-import { steps } from '../data/process';
+import { useT } from '../i18n';
+
+const { t } = useT(Astro.currentLocale);
+const pr = t.process;
 ---
 
 <section class="section container" id="process">
-  <p class="eyebrow">Процес</p>
-  <h2>Як я працюю</h2>
-  <p class="lead">Простий і прозорий процес: ви завжди знаєте, на якому етапі проєкт.</p>
+  <p class="eyebrow">{pr.eyebrow}</p>
+  <h2>{pr.title}</h2>
+  <p class="lead">{pr.lead}</p>
 
   <ol class="steps">
-    {steps.map((s, i) => (
+    {pr.steps.map((s, i) => (
       <li class="step" data-reveal style={`--i:${i}`}>
         <span class="num">{String(i + 1).padStart(2, '0')}</span>
         <h3>{s.title}</h3>

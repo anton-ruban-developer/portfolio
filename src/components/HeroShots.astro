@@ -1,5 +1,8 @@
 ---
 import { projects } from '../data/projects';
+import { useT } from '../i18n';
+
+const { t } = useT(Astro.currentLocale);
 
 const real = projects.filter((p) => p.image).slice(0, 3).map((p) => ({ img: p.image, name: p.title }));
 const frames = [...real, ...Array.from({ length: 3 - real.length }, () => ({ img: '', name: '' }))];
@@ -16,7 +19,7 @@ const frames = [...real, ...Array.from({ length: 3 - real.length }, () => ({ img
       </div>
     </div>
   ))}
-  <div class="chip"><i></i> Реальна робота</div>
+  <div class="chip"><i></i> {t.hero.chip}</div>
 </div>
 
 <style>

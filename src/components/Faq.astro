@@ -1,15 +1,18 @@
 ---
-import { faq } from '../data/faq';
+import { useT } from '../i18n';
 import { site } from '../data/site';
+
+const { t } = useT(Astro.currentLocale);
+const faq = t.faq.items;
 ---
 
 <section class="section container" id="faq">
   <div class="wrap">
     <div class="side" data-reveal>
       <p class="eyebrow">FAQ</p>
-      <h2>Питання та відповіді</h2>
-      <p class="lead">Не знайшли відповідь? Напишіть, відповім особисто.</p>
-      <a class="btn" href={site.telegram} target="_blank" rel="noopener">Запитати в Telegram</a>
+      <h2>{t.faq.title}</h2>
+      <p class="lead">{t.faq.lead}</p>
+      <a class="btn" href={site.telegram} target="_blank" rel="noopener">{t.faq.ask}</a>
     </div>
 
     <div class="list">

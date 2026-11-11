@@ -1,0 +1,131 @@
+// Структура словника: кожна мова (uk.ts, ru.ts, en.ts) має заповнити всі ці поля.
+// Якщо в одній з мов чогось бракує, TypeScript підсвітить помилку.
+
+export interface Service {
+  title: string;
+  forWho: string;
+  features: string[];
+  term: string;
+  price: string;
+  popular?: boolean;
+}
+
+export interface ProjectText {
+  /** бізнес і місто */
+  short: string;
+  type: string;
+  description: string;
+  /** пункти «що зроблено»: показуються тільки у великому кейсі */
+  results?: string[];
+  tags: string[];
+}
+
+export interface Dict {
+  /** SEO: заголовок вкладки, опис для пошуку та ключові запити цієї мови */
+  meta: {
+    title: string;
+    description: string;
+    keywords: string[];
+  };
+  city: string;
+  nav: {
+    portfolio: string;
+    services: string;
+    process: string;
+    why: string;
+    faq: string;
+    contact: string;
+  };
+  ui: {
+    telegramCta: string;
+    discuss: string;
+    toHome: string;
+    openMenu: string;
+    language: string;
+    acceptingProjects: string;
+  };
+  hero: {
+    eyebrow: string;
+    /** заголовок по словах: звичайні слова + виділені жовтим */
+    lead: string[];
+    accent: string[];
+    text: string;
+    viewWork: string;
+    chip: string;
+  };
+  stats: { value: string; unit: string; label: string }[];
+  stackLabel: string;
+  portfolio: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    openSite: string;
+    openSiteAria: string;
+    screenshotAlt: string;
+    screenshot: string;
+    hint: string;
+    projects: Record<string, ProjectText>;
+  };
+  services: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    popular: string;
+    term: string;
+    price: string;
+    items: Service[];
+  };
+  process: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    steps: { title: string; text: string }[];
+  };
+  why: {
+    eyebrow: string;
+    title: string;
+    lead: string;
+    codeComment: string;
+    card: [string, string][];
+    points: { title: string; text: string }[];
+    reviews: { text: string; name: string; role: string }[];
+  };
+  faq: {
+    title: string;
+    lead: string;
+    ask: string;
+    items: { q: string; a: string }[];
+  };
+  contact: {
+    title: string;
+    lead: string;
+    phone: string;
+    form: {
+      subject: string;
+      name: string;
+      namePh: string;
+      contact: string;
+      contactPh: string;
+      project: string;
+      other: string;
+      message: string;
+      messagePh: string;
+      submit: string;
+      consent: string;
+      sending: string;
+      success: string;
+      error: string;
+      network: string;
+    };
+  };
+  footer: {
+    about: string;
+    navLabel: string;
+    sections: string;
+    contacts: string;
+    timeNote: string;
+    worldwide: string;
+    rights: string;
+    up: string;
+  };
+}

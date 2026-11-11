@@ -6,21 +6,26 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileCta from '../components/MobileCta.astro';
 import { site } from '../data/site';
+import { useT, locales, defaultLocale, langMeta, stripLocale, localizePath } from '../i18n';
 
 interface Props {
-  title: string;
+  /** за замовчуванням беруться з словника мови (meta.title / meta.description) */
+  title?: string;
   description?: string;
 }
 
-const {
-  title,
-  description = 'Створюю сайти під ключ: лендінги, сайти-візитки та корпоративні сайти.',
-} = Astro.props;
+const { lang, t } = useT(Astro.currentLocale);
+const { title = t.meta.title, description = t.meta.description } = Astro.props;
 
 // якщо `site` не задано в astro.config, беремо адресу поточного запиту
 const base = Astro.site ?? Astro.url;
 const canonical = new URL(Astro.url.pathname, base);
 const ogImage = new URL('/og.png', base);
+
+// hreflang: та сама сторінка всіма мовами, щоб пошуковик показував людям версію їхньою мовою
+const pagePath = stripLocale(Astro.url.pathname);
+const alternates = locales.map((l) => ({ lang: l, href: new URL(localizePath(l, pagePath), base).href }));
+const xDefault = new URL(localizePath(defaultLocale, pagePath), base).href;
 
 // Розмітка Schema.org: допомагає Google показувати сайт у локальному пошуку
 const jsonLd = {
@@ -28,30 +33,36 @@ const jsonLd = {
   '@type': 'ProfessionalService',
   name: site.name,
   description,
-  url: new URL('/', base).href,
+  url: canonical.href,
+  inLanguage: lang,
+  knowsLanguage: [...locales],
   image: ogImage.href,
   telephone: site.phone,
   email: site.email,
-  areaServed: 'UA',
-  address: { '@type': 'PostalAddress', addressLocality: site.city, addressCountry: 'UA' },
+  areaServed: lang === 'en' ? ['UA', 'US'] : 'UA',
+  address: { '@type': 'PostalAddress', addressLocality: t.city.split(',')[0], addressCountry: 'UA' },
   sameAs: [site.telegram],
 };
 ---
 
 <!doctype html>
-<html lang="uk">
+<html lang={lang}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="keywords" content={t.meta.keywords.join(', ')} />
     <link rel="canonical" href={canonical} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.lang} href={a.href} />)}
+    <link rel="alternate" hreflang="x-default" href={xDefault} />
     <link rel="sitemap" href="/sitemap.xml" />
     <meta name="theme-color" content="#0e1116" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:locale" content="uk_UA" />
+    <meta property="og:locale" content={langMeta[lang].ogLocale} />
+    {locales.filter((l) => l !== lang).map((l) => <meta property="og:locale:alternate" content={langMeta[l].ogLocale} />)}
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={title} />
     <meta property="og:description" content={description} />

@@ -1,9 +1,12 @@
 ---
 import { stack } from '../data/content';
+import { useT } from '../i18n';
+
+const { t } = useT(Astro.currentLocale);
 const row = [...stack, ...stack];
 ---
 
-<div class="marquee" role="region" aria-label="Технології, з якими я працюю">
+<div class="marquee" role="region" aria-label={t.stackLabel}>
   <div class="track">
     {row.map((s, i) => (
       <span aria-hidden={i >= stack.length ? 'true' : undefined}>{s}<i>✦</i></span>

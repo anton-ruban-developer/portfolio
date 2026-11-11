@@ -1,19 +1,25 @@
 ---
 import { projects } from '../data/projects';
+import { useT } from '../i18n';
 
-const featured = projects.filter((p) => p.featured);
-const rest = projects.filter((p) => !p.featured);
+const { t } = useT(Astro.currentLocale);
+const pt = t.portfolio;
+
+// спільні дані проєкту + тексти поточною мовою
+const list = projects.map((p) => ({ ...p, ...pt.projects[p.id] }));
+const featured = list.filter((p) => p.featured);
+const rest = list.filter((p) => !p.featured);
 ---
 
 <section class="section container" id="portfolio">
-  <p class="eyebrow">Портфоліо</p>
-  <h2>Роботи, які можна оглянути</h2>
-  <p class="lead">Наведіть курсор на скріншот (на телефоні просто прокрутіть до нього), щоб переглянути сайт повністю.</p>
+  <p class="eyebrow">{pt.eyebrow}</p>
+  <h2>{pt.title}</h2>
+  <p class="lead">{pt.lead}</p>
 
   <div class="cases">
     {featured.map((p) => (
       <article class="case" data-reveal>
-        <a class="card spot" href={p.url} target="_blank" rel="noopener" aria-label={`Відкрити сайт: ${p.title}`} style={`--t:${p.scroll ?? 10}s`}>
+        <a class="card spot" href={p.url} target="_blank" rel="noopener" aria-label={`${pt.openSiteAria}: ${p.title}`} style={`--t:${p.scroll ?? 10}s`}>
           <div class="bar">
             <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
             <span class="name">{p.title}</span>
@@ -21,9 +27,9 @@ const rest = projects.filter((p) => !p.featured);
           </div>
           <div class="view">
             {p.image
-              ? <img src={p.image} alt={`Сайт ${p.title}: повна сторінка`} loading="lazy" decoding="async" />
-              : <div class="placeholder">Скріншот</div>}
-            <span class="hint" aria-hidden="true">Дивись</span>
+              ? <img src={p.image} alt={`${p.title}: ${pt.screenshotAlt}`} loading="lazy" decoding="async" />
+              : <div class="placeholder">{pt.screenshot}</div>}
+            <span class="hint" aria-hidden="true">{pt.hint}</span>
           </div>
         </a>
 
@@ -37,7 +43,7 @@ const rest = projects.filter((p) => !p.featured);
             </ul>
           )}
           <div class="tags">{p.tags.map((t) => <span>{t}</span>)}</div>
-          <a class="btn" href={p.url} target="_blank" rel="noopener">Відкрити сайт ↗</a>
+          <a class="btn" href={p.url} target="_blank" rel="noopener">{pt.openSite}</a>
         </div>
       </article>
     ))}
@@ -47,7 +53,7 @@ const rest = projects.filter((p) => !p.featured);
     <div class="more">
       {rest.map((p, i) => (
         <article class="tile" data-reveal style={`--i:${i % 2}`}>
-          <a class="card spot" href={p.url} target="_blank" rel="noopener" aria-label={`Відкрити сайт: ${p.title}`} style={`--t:${p.scroll ?? 10}s`}>
+          <a class="card spot" href={p.url} target="_blank" rel="noopener" aria-label={`${pt.openSiteAria}: ${p.title}`} style={`--t:${p.scroll ?? 10}s`}>
             <div class="bar">
               <span class="dots" aria-hidden="true"><i></i><i></i><i></i></span>
               <span class="name">{p.title}</span>
@@ -55,9 +61,9 @@ const rest = projects.filter((p) => !p.featured);
             </div>
             <div class="view">
               {p.image
-                ? <img src={p.image} alt={`Сайт ${p.title}: повна сторінка`} loading="lazy" decoding="async" />
-                : <div class="placeholder">Скріншот</div>}
-              <span class="hint" aria-hidden="true">Дивись</span>
+                ? <img src={p.image} alt={`${p.title}: ${pt.screenshotAlt}`} loading="lazy" decoding="async" />
+                : <div class="placeholder">{pt.screenshot}</div>}
+              <span class="hint" aria-hidden="true">{pt.hint}</span>
             </div>
           </a>
           <div class="tile-body">

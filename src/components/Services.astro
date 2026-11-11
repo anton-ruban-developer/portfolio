@@ -1,24 +1,27 @@
 ---
-import { services } from '../data/services';
+import { useT } from '../i18n';
+
+const { t } = useT(Astro.currentLocale);
+const st = t.services;
 ---
 
 <section class="section container" id="services">
-  <p class="eyebrow">Послуги та вартість</p>
-  <h2>Оберіть формат проєкту</h2>
-  <p class="lead">Точну вартість називаю після короткого брифу. Нижче орієнтири.</p>
+  <p class="eyebrow">{st.eyebrow}</p>
+  <h2>{st.title}</h2>
+  <p class="lead">{st.lead}</p>
 
   <div class="grid">
-    {services.map((s, i) => (
+    {st.items.map((s, i) => (
       <article class:list={['card', 'spot', { popular: s.popular }]} data-reveal style={`--i:${i}`}>
-        {s.popular && <span class="badge">Найчастіше обирають</span>}
+        {s.popular && <span class="badge">{st.popular}</span>}
         <h3>{s.title}</h3>
         <p class="for">{s.forWho}</p>
         <ul>{s.features.map((f) => <li>{f}</li>)}</ul>
         <div class="meta">
-          <div><span class="label">Термін</span><strong>{s.term}</strong></div>
-          <div><span class="label">Вартість</span><strong>{s.price}</strong></div>
+          <div><span class="label">{st.term}</span><strong>{s.term}</strong></div>
+          <div><span class="label">{st.price}</span><strong>{s.price}</strong></div>
         </div>
-        <a class="btn" href="#contact" data-service={s.title}>Обговорити проєкт</a>
+        <a class="btn" href="#contact" data-service={s.title}>{t.ui.discuss}</a>
       </article>
     ))}
   </div>

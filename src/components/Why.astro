@@ -1,23 +1,27 @@
 ---
 import { site } from '../data/site';
-import { why, reviews } from '../data/content';
+import { useT } from '../i18n';
+
+const { t } = useT(Astro.currentLocale);
+const { why } = t;
+const { reviews } = why;
 ---
 
 <section class="section container" id="why">
   <div class="wrap">
     <div class="dev" data-reveal aria-hidden="true">
       <div class="bar"><i></i><i></i><i></i><span>your-site.ts</span></div>
-      <pre><code><span class="tk-c">// що ви отримуєте</span>
+      <pre><code><span class="tk-c">// {why.codeComment}</span>
 <span class="tk-k">const</span> <span class="tk-n">yourSite</span> <span class="tk-o">=</span> {'{'}
 {why.card.map(([key, val]) => (
   <span>  <span class="tk-p">{key}</span>: <span class="tk-s">'{val}'</span>,{'\n'}</span>
 ))}  <span class="tk-p">ready</span>: <span class="tk-b">true</span>,
 {'}'};</code></pre>
-      <div class="status"><i></i> Приймаю нові проєкти</div>
+      <div class="status"><i></i> {t.ui.acceptingProjects}</div>
     </div>
 
     <div class="text" data-reveal style="--i:1">
-      <p class="eyebrow">Переваги</p>
+      <p class="eyebrow">{why.eyebrow}</p>
       <h2>{why.title}</h2>
       <p class="intro">{why.lead}</p>
 
@@ -27,7 +31,7 @@ import { why, reviews } from '../data/content';
         ))}
       </ul>
 
-      <a class="btn" href="#contact">Обговорити проєкт</a>
+      <a class="btn" href="#contact">{t.ui.discuss}</a>
     </div>
   </div>
 

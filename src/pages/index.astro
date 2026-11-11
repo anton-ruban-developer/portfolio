@@ -1,28 +1,6 @@
 ---
-import Layout from '../layouts/Layout.astro';
-import Hero from '../components/Hero.astro';
-import Stack from '../components/Stack.astro';
-import Portfolio from '../components/Portfolio.astro';
-import Services from '../components/Services.astro';
-import Process from '../components/Process.astro';
-import Why from '../components/Why.astro';
-import Faq from '../components/Faq.astro';
-import Contact from '../components/Contact.astro';
-import { site } from '../data/site';
+// Українська версія: /
+import Home from '../components/Home.astro';
 ---
 
-<Layout
-  title={`Створення сайтів у Харкові під ключ | ${site.name}`}
-  description="Створення лендінгів, сайтів-візиток і корпоративних сайтів у Харкові та по всій Україні. Швидко, з адаптацією під телефон і SEO. 25+ реалізованих проєктів."
->
-  <main>
-    <Hero />
-    <Stack />
-    <div class="band"><Portfolio /></div>
-    <div class="band band--soft"><Services /></div>
-    <div class="band band--yellow"><Process /></div>
-    <div class="band band--grain"><Why /></div>
-    <div class="band"><Faq /></div>
-    <div class="band band--soft"><Contact /></div>
-  </main>
-</Layout>
+<Home />

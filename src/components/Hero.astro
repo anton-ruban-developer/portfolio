@@ -1,14 +1,15 @@
 ---
 import { site } from '../data/site';
-import { stats } from '../data/content';
+import { useT } from '../i18n';
 import HeroShots from './HeroShots.astro';
 
+const { t } = useT(Astro.currentLocale);
+
 // Заголовок по словах: кожне слово виїжджає знизу по черзі
-const lead = ['Сайти,', 'які'];
-const accent = ['приводять', 'клієнтів'];
+const { lead, accent } = t.hero;
 
 // Цифри, які можна «відрахувати»: 25+ → 25 і «+». Діапазони на кшталт 3–5 лишаються як є.
-const parsed = stats.map((s) => {
+const parsed = t.stats.map((s) => {
   const m = s.value.match(/^(\d+)(\D*)$/);
   return { ...s, to: m ? Number(m[1]) : null, suffix: m ? m[2] : '' };
 });
@@ -17,18 +18,15 @@ const parsed = stats.map((s) => {
 <section class="hero band">
   <div class="container grid">
     <div class="copy" data-reveal>
-      <p class="eyebrow">Створення сайтів · {site.city}</p>
+      <p class="eyebrow">{t.hero.eyebrow}</p>
       <h1>
         {lead.map((w, i) => <><span class="w"><span style={`--w:${i}`}>{w}</span></span>{' '}</>)}
         <span class="hl">{accent.map((w, i) => <><span class="w"><span style={`--w:${lead.length + i}`}>{w}</span></span>{i < accent.length - 1 && ' '}</>)}</span>
       </h1>
-      <p class="lead">
-        Лендінги, сайти-візитки та корпоративні сайти під ключ: швидкі, зручні на телефоні й
-        готові до пошуку.
-      </p>
+      <p class="lead">{t.hero.text}</p>
       <div class="actions">
-        <a class="btn" href={site.telegram} target="_blank" rel="noopener">Написати в Telegram</a>
-        <a class="btn btn--ghost" href="#portfolio">Дивитись роботи</a>
+        <a class="btn" href={site.telegram} target="_blank" rel="noopener">{t.ui.telegramCta}</a>
+        <a class="btn btn--ghost" href="#portfolio">{t.hero.viewWork}</a>
       </div>
     </div>
     <HeroShots />

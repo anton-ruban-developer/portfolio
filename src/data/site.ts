@@ -3,8 +3,6 @@ const telegramUser = 'ruban_web_studio';
 export const site = {
   name: 'Ruban Web Studio',
   logo: '/portfolio/logo.webp',
-  role: 'Веб-розробник',
-  city: 'Харків',
   telegram: `https://t.me/${telegramUser}`,
   telegramHandle: `@${telegramUser}`,
   email: 'anton-ruban@ukr.net',

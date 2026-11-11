@@ -1,16 +1,16 @@
 ---
 import { site } from '../data/site';
-import { services } from '../data/services';
+import { useT } from '../i18n';
+
+const { t } = useT(Astro.currentLocale);
+const f = t.contact.form;
 ---
 
 <section class="section container" id="contact">
   <div class="wrap" class:list={{ solo: !site.formKey }}>
     <div class="info">
-      <h2>Обговоримо ваш проєкт</h2>
-      <p class="lead">
-        Напишіть коротко, що потрібно, і я відповім з прикладами та орієнтовною вартістю.
-        Працюю з клієнтами по всій Україні.
-      </p>
+      <h2>{t.contact.title}</h2>
+      <p class="lead">{t.contact.lead}</p>
 
       <ul class="links">
         <li>
@@ -20,7 +20,7 @@ import { services } from '../data/services';
         </li>
         <li>
           <a href={`tel:${site.phone}`}>
-            <span class="k">Телефон</span><strong>{site.phoneLabel}</strong><i>→</i>
+            <span class="k">{t.contact.phone}</span><strong>{site.phoneLabel}</strong><i>→</i>
           </a>
         </li>
         <li>
@@ -32,38 +32,41 @@ import { services } from '../data/services';
     </div>
 
     {site.formKey && (
-      <form id="lead-form" class="form" novalidate>
+      <form
+        id="lead-form" class="form" novalidate
+        data-sending={f.sending} data-success={f.success} data-error={f.error} data-network={f.network}
+      >
         <input type="hidden" name="access_key" value={site.formKey} />
-        <input type="hidden" name="subject" value="Нова заявка з сайту" />
+        <input type="hidden" name="subject" value={f.subject} />
         <input type="hidden" name="from_name" value={`Сайт ${site.name}`} />
         <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" />
 
         <label>
-          Ім’я
-          <input type="text" name="name" required autocomplete="name" placeholder="Як до вас звертатись" />
+          {f.name}
+          <input type="text" name="name" required autocomplete="name" placeholder={f.namePh} />
         </label>
 
         <label>
-          Telegram або телефон
-          <input type="text" name="contact" required placeholder="@username або +380…" />
+          {f.contact}
+          <input type="text" name="contact" required placeholder={f.contactPh} />
         </label>
 
         <label>
-          Що потрібно
+          {f.project}
           <select name="project">
-            {services.map((s) => <option value={s.title}>{s.title}</option>)}
-            <option value="Інше">Інше / не знаю</option>
+            {t.services.items.map((s) => <option value={s.title}>{s.title}</option>)}
+            <option value={f.other}>{f.other}</option>
           </select>
         </label>
 
         <label>
-          Коротко про задачу
-          <textarea name="message" rows="4" placeholder="Необов’язково"></textarea>
+          {f.message}
+          <textarea name="message" rows="4" placeholder={f.messagePh}></textarea>
         </label>
 
-        <button class="btn" type="submit">Надіслати заявку</button>
+        <button class="btn" type="submit">{f.submit}</button>
         <p id="lead-status" class="status" role="status" aria-live="polite"></p>
-        <p class="note">Натискаючи кнопку, ви погоджуєтесь на обробку даних для зв’язку з вами.</p>
+        <p class="note">{f.consent}</p>
       </form>
     )}
   </div>
@@ -118,6 +121,9 @@ import { services } from '../data/services';
   const form = document.getElementById('lead-form') as HTMLFormElement | null;
   const status = document.getElementById('lead-status');
 
+  // тексти статусу беремо з data-атрибутів форми: вони вже потрібною мовою
+  const msg = (key: string) => form?.dataset[key] ?? '';
+
   const show = (text: string, kind: '' | 'ok' | 'err') => {
     if (!status) return;
     status.textContent = text;
@@ -132,7 +138,7 @@ import { services } from '../data/services';
     }
     const btn = form.querySelector<HTMLButtonElement>('button[type="submit"]');
     if (btn) btn.disabled = true;
-    show('Надсилаю…', '');
+    show(msg('sending'), '');
 
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
@@ -143,12 +149,12 @@ import { services } from '../data/services';
       const json = await res.json();
       if (res.ok && json.success) {
         form.reset();
-        show('Дякую! Заявку отримано, відповім найближчим часом.', 'ok');
+        show(msg('success'), 'ok');
       } else {
-        show('Не вдалося надіслати. Напишіть, будь ласка, у Telegram.', 'err');
+        show(msg('error'), 'err');
       }
     } catch {
-      show('Помилка зʼєднання. Напишіть, будь ласка, у Telegram.', 'err');
+      show(msg('network'), 'err');
     } finally {
       if (btn) btn.disabled = false;
     }

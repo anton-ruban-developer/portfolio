@@ -1,18 +1,20 @@
 ---
 import { site } from '../data/site';
+import { useT } from '../i18n';
 
+const { t, home } = useT(Astro.currentLocale);
 const year = new Date().getFullYear();
 const nav = [
-  { href: '/#portfolio', label: 'Портфоліо' },
-  { href: '/#services', label: 'Послуги' },
-  { href: '/#process', label: 'Як я працюю' },
-  { href: '/#why', label: 'Переваги' },
-  { href: '/#faq', label: 'Питання' },
-  { href: '/#contact', label: 'Контакти' },
+  { href: `${home}#portfolio`, label: t.nav.portfolio },
+  { href: `${home}#services`, label: t.nav.services },
+  { href: `${home}#process`, label: t.nav.process },
+  { href: `${home}#why`, label: t.nav.why },
+  { href: `${home}#faq`, label: t.nav.faq },
+  { href: `${home}#contact`, label: t.nav.contact },
 ];
 const contacts = [
   { label: 'Telegram', value: site.telegramHandle, href: site.telegram, ext: true },
-  { label: 'Телефон', value: site.phoneLabel, href: `tel:${site.phone}` },
+  { label: t.contact.phone, value: site.phoneLabel, href: `tel:${site.phone}` },
   { label: 'Email', value: site.email, href: `mailto:${site.email}` },
 ];
 ---
@@ -20,26 +22,26 @@ const contacts = [
 <footer class="footer">
   <div class="container top">
     <div class="brand">
-      <a class="logo" href="/" aria-label={`${site.name}: на головну`}>
+      <a class="logo" href={home} aria-label={`${site.name}: ${t.ui.toHome}`}>
         {site.logo
           ? <img src={site.logo} alt={site.name} width="172" height="40" loading="lazy" decoding="async" />
           : <span class="logo-text">{site.name}</span>}
       </a>
-      <p class="about">Сайти під ключ для бізнесу: лендінги, сайти-візитки та корпоративні сайти.</p>
+      <p class="about">{t.footer.about}</p>
     </div>
-    <span class="status"><i></i> Приймаю нові проєкти</span>
+    <span class="status"><i></i> {t.ui.acceptingProjects}</span>
   </div>
 
   <div class="container cols">
-    <nav aria-label="Навігація в підвалі">
-      <h3>Розділи</h3>
+    <nav aria-label={t.footer.navLabel}>
+      <h3>{t.footer.sections}</h3>
       <ul class="nav">
         {nav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
       </ul>
     </nav>
 
     <div>
-      <h3>Контакти</h3>
+      <h3>{t.footer.contacts}</h3>
       <ul class="contacts">
         {contacts.map((c) => (
           <li>
@@ -54,9 +56,9 @@ const contacts = [
     </div>
 
     <div class="where">
-      <h3>{site.city}</h3>
-      <p class="clock"><time id="kh-time">--:--</time><small>за київським часом</small></p>
-      <p class="muted">Працюю з клієнтами по всій Україні та за кордоном.</p>
+      <h3>{t.city}</h3>
+      <p class="clock"><time id="kh-time">--:--</time><small>{t.footer.timeNote}</small></p>
+      <p class="muted">{t.footer.worldwide}</p>
     </div>
   </div>
 
@@ -65,8 +67,8 @@ const contacts = [
   </div>
 
   <div class="container bottom">
-    <p>© {year} {site.name}. Усі права захищені.</p>
-    <a class="up" href="#top" aria-label="Нагору">Нагору <span aria-hidden="true">↑</span></a>
+    <p>© {year} {site.name}. {t.footer.rights}</p>
+    <a class="up" href="#top" aria-label={t.footer.up}>{t.footer.up} <span aria-hidden="true">↑</span></a>
   </div>
 </footer>
 

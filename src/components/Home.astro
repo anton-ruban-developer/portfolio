@@ -1,0 +1,26 @@
+---
+// Головна сторінка. Одна для всіх мов: тексти підставляються зі словника
+// за адресою сторінки (/, /ru/, /en/).
+import Layout from '../layouts/Layout.astro';
+import Hero from './Hero.astro';
+import Stack from './Stack.astro';
+import Portfolio from './Portfolio.astro';
+import Services from './Services.astro';
+import Process from './Process.astro';
+import Why from './Why.astro';
+import Faq from './Faq.astro';
+import Contact from './Contact.astro';
+---
+
+<Layout>
+  <main>
+    <Hero />
+    <Stack />
+    <div class="band"><Portfolio /></div>
+    <div class="band band--soft"><Services /></div>
+    <div class="band band--yellow"><Process /></div>
+    <div class="band band--grain"><Why /></div>
+    <div class="band"><Faq /></div>
+    <div class="band band--soft"><Contact /></div>
+  </main>
+</Layout>
