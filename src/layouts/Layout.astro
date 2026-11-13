@@ -2,6 +2,11 @@
 import '@fontsource-variable/inter';
 import '@fontsource-variable/unbounded/wght.css';
 import '../styles/global.css';
+// файли шрифтів для preload (ті самі, що в CSS fontsource): латиниця всім, кирилиця для uk/ru
+import interLatin from '@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url';
+import interCyr from '@fontsource-variable/inter/files/inter-cyrillic-wght-normal.woff2?url';
+import unbLatin from '@fontsource-variable/unbounded/files/unbounded-latin-wght-normal.woff2?url';
+import unbCyr from '@fontsource-variable/unbounded/files/unbounded-cyrillic-wght-normal.woff2?url';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import MobileCta from '../components/MobileCta.astro';
@@ -16,6 +21,7 @@ interface Props {
 
 const { lang, t } = useT(Astro.currentLocale);
 const { title = t.meta.title, description = t.meta.description } = Astro.props;
+const fontPreloads = lang === 'en' ? [unbLatin, interLatin] : [unbCyr, interCyr];
 
 // якщо `site` не задано в astro.config, беремо адресу поточного запиту
 const base = Astro.site ?? Astro.url;
@@ -48,6 +54,7 @@ const jsonLd = {
 <html lang={lang}>
   <head>
     <meta charset="utf-8" />
+    {fontPreloads.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="icon" href="/favicon.svg" />
     <title>{title}</title>

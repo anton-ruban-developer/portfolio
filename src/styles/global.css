@@ -1,3 +1,16 @@
+/* Запасні шрифти з підігнаними метриками (Arial під розміри Unbounded та Inter, латиниця):
+   поки вебшрифт вантажиться, текст займає майже стільки ж місця, і після підміни макет не стрибає (CLS) */
+@font-face {
+  font-family: 'Unbounded Fallback';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Roboto');
+  size-adjust: 135.9%; ascent-override: 73.2%; descent-override: 18%; line-gap-override: 0%;
+}
+@font-face {
+  font-family: 'Inter Fallback';
+  src: local('Arial'), local('ArialMT'), local('Liberation Sans'), local('Roboto');
+  size-adjust: 108.2%; ascent-override: 89.5%; descent-override: 22.3%; line-gap-override: 0%;
+}
+
 :root {
   --bg: #0e1116;
   --bg-soft: #161b22;
@@ -8,8 +21,8 @@
   --line: rgba(255, 255, 255, .1);
   --radius: 18px;
   --max: 1180px;
-  --font-body: 'Inter Variable', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
-  --font-head: 'Unbounded Variable', 'Inter Variable', system-ui, sans-serif;
+  --font-body: 'Inter Variable', 'Inter Fallback', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --font-head: 'Unbounded Variable', 'Unbounded Fallback', 'Inter Variable', system-ui, sans-serif;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
