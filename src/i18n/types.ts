@@ -3,7 +3,7 @@
 
 export interface Service {
   title: string;
-  forWho: string;
+  forWho?: string;
   features: string[];
   term: string;
   price: string;

@@ -22,7 +22,7 @@ const promoActive = Date.now() < promoEnd.getTime();
         {s.popular && <span class="badge">{st.popular}</span>}
         {promoActive && s.promoPrice && <span class="badge promo-badge">{st.promoBadge}</span>}
         <h3>{s.title}</h3>
-        <p class="for">{s.forWho}</p>
+        {s.forWho && <p class="for">{s.forWho}</p>}
         <ul>{s.features.map((f) => <li>{f}</li>)}</ul>
         <div class="meta">
           <div><span class="label">{st.term}</span><strong>{s.term}</strong></div>

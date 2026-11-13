@@ -115,6 +115,7 @@ const en: Dict = {
         title: 'Business website',
         forWho: 'For small businesses and professionals',
         features: [
+          'Up to 5 pages',
           'Services, prices, reviews and contacts',
           'Map, social links, contact buttons',
           'Google Search Console and analytics',
@@ -127,17 +128,16 @@ const en: Dict = {
       },
       {
         title: 'Multi-page website',
-        forWho: 'For companies with several lines of business',
         features: [
-          'Multiple pages: services, about, case studies, contacts',
+          'Services, about, case studies, contacts',
           'SEO-driven structure built around search keywords',
           'News section or blog if needed',
           'Multilingual if needed',
           'Contact forms and analytics',
+          'Admin panel for editing content yourself, if needed',
         ],
         term: '1–2 weeks',
         price: 'from $500',
-        promoPrice: 'from $400',
       },
     ],
   },
