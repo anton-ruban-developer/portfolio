@@ -72,7 +72,15 @@ const jsonLd = {
     <meta name="twitter:card" content="summary_large_image" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
-    <script is:inline>document.documentElement.classList.add('js');</script>
+    <script is:inline>
+      (function () {
+        var d = document.documentElement, n = navigator;
+        d.classList.add('js');
+        // слабкий пристрій (≤4 ГБ пам'яті, ≤4 ядра або режим економії трафіку): вимикаємо важкі ефекти прокрутки
+        var lite = (n.deviceMemory && n.deviceMemory <= 4) || (n.hardwareConcurrency && n.hardwareConcurrency <= 4) || (n.connection && n.connection.saveData);
+        if (lite) d.classList.add('lite');
+      })();
+    </script>
 
     {site.gaId && (
       <>
@@ -113,7 +121,8 @@ const jsonLd = {
 
       // плавна поява блоків з data-reveal
       const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
-      if ('IntersectionObserver' in window) {
+      const lite = document.documentElement.classList.contains('lite');
+      if (!lite && 'IntersectionObserver' in window) {
         const io = new IntersectionObserver(
           (entries) =>
             entries.forEach((e) => {

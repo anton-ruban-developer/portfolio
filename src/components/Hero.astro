@@ -95,6 +95,11 @@ const parsed = t.stats.map((s) => {
   @media (max-width: 900px) {
     .grid { grid-template-columns: 1fr; gap: 2.5rem; }
   }
+  /* на телефоні дві кнопки в один ряд, трохи менші */
+  @media (max-width: 560px) {
+    .actions { flex-wrap: nowrap; gap: .5rem; }
+    .actions .btn { flex: 1 1 0; min-width: 0; padding: .6rem .7rem; font-size: .85rem; text-align: center; line-height: 1.25; }
+  }
   /* на планшеті й телефоні статистика сіткою 2×2, підписи дрібніші */
   @media (max-width: 1000px) {
     .stats { grid-template-columns: repeat(2, 1fr); }

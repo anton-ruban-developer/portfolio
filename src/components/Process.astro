@@ -52,7 +52,7 @@ const pr = t.process;
   // заповнення ліній кроків пропорційно прокрутці секції
   const list = document.querySelector<HTMLElement>('.steps');
   const items = list ? [...list.querySelectorAll<HTMLElement>('.step')] : [];
-  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches || document.documentElement.classList.contains('lite');
 
   if (list && items.length && !reduce) {
     list.classList.add('live');

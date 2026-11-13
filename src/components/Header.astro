@@ -64,6 +64,8 @@ const langs = locales.map((l) => ({ code: l, href: localizePath(l, pagePath), ..
     backdrop-filter: blur(10px);
     border-bottom: 1px solid rgba(255, 255, 255, .08);
   }
+  /* розмиття фону дороге під час прокрутки: на слабких пристроях суцільний фон */
+  :global(.lite) .header { backdrop-filter: none; background: rgb(14, 17, 22); }
   .bar { display: flex; align-items: center; gap: 1rem; min-height: 68px; }
 
   .logo { display: inline-flex; align-items: center; text-decoration: none; }
