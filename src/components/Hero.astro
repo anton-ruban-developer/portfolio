@@ -17,7 +17,7 @@ const parsed = t.stats.map((s) => {
 
 <section class="hero band">
   <div class="container grid">
-    <div class="copy" data-reveal>
+    <div class="copy">
       <p class="eyebrow">{t.hero.eyebrow}</p>
       <h1>
         {lead.map((w, i) => <><span class="w"><span style={`--w:${i}`}>{w}</span></span>{' '}</>)}
@@ -34,7 +34,7 @@ const parsed = t.stats.map((s) => {
 
   <div class="container stats">
     {parsed.map((s, i) => (
-      <div class="stat" data-reveal style={`--i:${i}`}>
+      <div class="stat">
         <strong>
           {s.to !== null
             ? <><span class="count" data-to={s.to}>{s.to}</span>{s.suffix}</>

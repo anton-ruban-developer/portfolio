@@ -4,7 +4,8 @@ import { useT } from '../i18n';
 
 const { t } = useT(Astro.currentLocale);
 
-const real = projects.filter((p) => p.image).slice(0, 3).map((p) => ({ img: p.image, name: p.title }));
+// легкі копії для першого екрана: public/portfolio/hero/ (перше вікно на всю висоту для панорами, решта обрізані зверху)
+const real = projects.filter((p) => p.image).slice(0, 3).map((p) => ({ img: p.image!.replace('/portfolio/', '/portfolio/hero/'), name: p.title }));
 const frames = [...real, ...Array.from({ length: 3 - real.length }, () => ({ img: '', name: '' }))];
 ---
 
@@ -14,7 +15,7 @@ const frames = [...real, ...Array.from({ length: 3 - real.length }, () => ({ img
       <div class="bar"><i></i><i></i><i></i><span>{f.name}</span></div>
       <div class="view">
         {f.img
-          ? <img src={f.img} alt="" loading="eager" decoding="async" />
+          ? <img src={f.img} alt="" loading="eager" decoding="async" fetchpriority={i === 0 ? 'high' : 'low'} />
           : <div class="skel"><b></b><b></b><b></b></div>}
       </div>
     </div>
