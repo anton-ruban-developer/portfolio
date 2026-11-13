@@ -7,6 +7,10 @@ const pt = t.portfolio;
 
 // спільні дані проєкту + тексти поточною мовою
 const list = projects.map((p) => ({ ...p, ...pt.projects[p.id] }));
+// на телефоні беремо копію 700px з public/portfolio/sm/, на більших екранах оригінал 1200px
+const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')} 700w, ${img} 1200w`;
+const sizes = '(max-width: 860px) calc(100vw - 32px), 600px';
+
 const featured = list.filter((p) => p.featured);
 const rest = list.filter((p) => !p.featured);
 ---
@@ -27,7 +31,7 @@ const rest = list.filter((p) => !p.featured);
           </div>
           <div class="view">
             {p.image
-              ? <img src={p.image} alt={`${p.title}: ${pt.screenshotAlt}`} loading="lazy" decoding="async" />
+              ? <img src={p.image} srcset={srcset(p.image)} sizes={sizes} alt={`${p.title}: ${pt.screenshotAlt}`} loading="lazy" decoding="async" />
               : <div class="placeholder">{pt.screenshot}</div>}
             <span class="hint" aria-hidden="true">{pt.hint}</span>
           </div>
@@ -61,7 +65,7 @@ const rest = list.filter((p) => !p.featured);
             </div>
             <div class="view">
               {p.image
-                ? <img src={p.image} alt={`${p.title}: ${pt.screenshotAlt}`} loading="lazy" decoding="async" />
+                ? <img src={p.image} srcset={srcset(p.image)} sizes={sizes} alt={`${p.title}: ${pt.screenshotAlt}`} loading="lazy" decoding="async" />
                 : <div class="placeholder">{pt.screenshot}</div>}
               <span class="hint" aria-hidden="true">{pt.hint}</span>
             </div>

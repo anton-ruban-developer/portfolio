@@ -3,6 +3,9 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
+  // стилі вбудовуються в сторінку: без окремого запиту, що блокує відображення
+  build: { inlineStylesheets: 'always' },
+
   // Основний домен: потрібен для canonical, hreflang та OG-тегів. Без site сторінки закриваються від індексації (noindex)
   site: 'https://rubanweb.com',
 
