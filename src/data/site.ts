@@ -5,7 +5,7 @@ export const site = {
   logo: '/portfolio/logo.svg',
   telegram: `https://t.me/${telegramUser}`,
   telegramHandle: `@${telegramUser}`,
-  email: 'ruban_web_studio@ukr.net',
+  email: 'hello@rubanweb.com',
   phone: '+380958702674',
   phoneLabel: '+38 (095) 870-26-74',
   /** ключ Web3Forms: заявки з форми приходять на пошту, на яку він створений (ruban_web_studio@ukr.net) */
