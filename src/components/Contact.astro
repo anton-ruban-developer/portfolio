@@ -40,7 +40,8 @@ const f = t.contact.form;
         <input type="hidden" name="access_key" value={site.formKey} />
         <input type="hidden" name="subject" value={f.subject} />
         <input type="hidden" name="from_name" value={`Сайт ${site.name}`} />
-        <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" />
+        <!-- пастка для ботів: людям не видно, програмам читання екрана теж -->
+        <input type="checkbox" name="botcheck" class="trap" tabindex="-1" autocomplete="off" aria-hidden="true" aria-label="botcheck" />
 
         <label>
           {f.name}
