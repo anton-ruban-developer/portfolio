@@ -26,7 +26,7 @@ const en: Dict = {
   },
   hero: {
     eyebrow: 'Website development · Kharkiv, Ukraine',
-    lead: ['Websites', 'that'],
+    lead: ['Websites', 'for', 'small', 'business', 'that'],
     accent: ['win', 'clients'],
     text: 'Turnkey landing pages, small business websites and multi-page websites: fast, mobile-friendly and ready for search.',
     viewWork: 'See my work',
@@ -41,7 +41,7 @@ const en: Dict = {
   stackLabel: 'Technologies I work with',
   portfolio: {
     eyebrow: 'Portfolio',
-    title: 'Live projects you can explore',
+    title: 'Website examples I’ve built',
     lead: 'Hover over a screenshot (on a phone, just scroll to it) to see the whole page.',
     openSite: 'Visit site ↗',
     openSiteAria: 'Visit site',
@@ -90,7 +90,7 @@ const en: Dict = {
   },
   services: {
     eyebrow: 'Services & pricing',
-    title: 'Choose your project type',
+    title: 'Website services and prices',
     lead: 'I quote an exact price after a short brief. Below are starting points.',
     popular: 'Most popular',
     term: 'Timeline',
@@ -143,7 +143,7 @@ const en: Dict = {
   },
   process: {
     eyebrow: 'Process',
-    title: 'How I work',
+    title: 'How I build a website in 4 steps',
     lead: 'A simple, transparent process: you always know where your project stands.',
     steps: [
       { title: 'Brief and quote', text: 'We discuss your goals, audience and websites you like. I give you a price and a timeline.' },
@@ -174,7 +174,7 @@ const en: Dict = {
     reviews: [],
   },
   faq: {
-    title: 'Questions & answers',
+    title: 'Questions about building a website',
     lead: 'Didn’t find an answer? Send me a message and I’ll reply personally.',
     ask: 'Ask on Telegram',
     items: [

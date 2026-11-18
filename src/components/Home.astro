@@ -10,9 +10,19 @@ import Process from './Process.astro';
 import Why from './Why.astro';
 import Faq from './Faq.astro';
 import Contact from './Contact.astro';
+import { useT } from '../i18n';
+
+const { t } = useT(Astro.currentLocale);
+// питання-відповіді з блоку FAQ: Google може показати їх прямо в пошуку
+const schema = [
+  {
+    '@type': 'FAQPage',
+    mainEntity: t.faq.items.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  },
+];
 ---
 
-<Layout>
+<Layout schema={schema}>
   <main>
     <Hero />
     <Stack />
