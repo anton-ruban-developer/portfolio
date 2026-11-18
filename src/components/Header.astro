@@ -14,7 +14,7 @@ const serviceLinks = servicesFor(lang).map((s) => {
 
 const links: { href: string; label: string; sub?: typeof serviceLinks }[] = [
   { href: `${home}#services`, label: t.nav.services, sub: serviceLinks },
-  { href: `${home}#portfolio`, label: t.nav.portfolio },
+  { href: localizePath(lang, '/works/'), label: t.nav.portfolio },
   { href: `${home}#process`, label: t.nav.process },
   { href: `${home}#why`, label: t.nav.why },
   { href: `${home}#faq`, label: t.nav.faq },
@@ -38,7 +38,7 @@ const langs = locales.map((l) => ({ code: l, href: localizePath(l, pagePath), ..
       <ul class="main">
         {links.map((l, i) => (
           <li style={`--i:${i}`} class:list={{ 'has-sub': l.sub?.length }}>
-            <a href={l.href} aria-current={l.sub?.some((s) => s.active) ? 'true' : undefined}>{l.label}</a>
+            <a href={l.href} aria-current={l.href === current ? 'page' : l.sub?.some((s) => s.active) ? 'true' : undefined}>{l.label}</a>
             {l.sub && l.sub.length > 0 && (
               <ul class="sub">
                 {l.sub.map((s) => (

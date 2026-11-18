@@ -3,7 +3,7 @@ import { locales, defaultLocale, localizePath } from '../i18n';
 
 // Сторінки сайту без префікса мови. Додавайте сюди нові, коли вони з'являться:
 // кожна автоматично потрапить у sitemap усіма мовами (/, /ru/, /en/).
-const pages = ['/', '/landing/', '/business-card-website/', '/multipage-website/', '/privacy/'];
+const pages = ['/', '/landing/', '/business-card-website/', '/multipage-website/', '/works/', '/privacy/'];
 
 export const GET: APIRoute = ({ site, url }) => {
   const abs = (path: string) => new URL(path, site ?? url).href;

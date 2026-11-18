@@ -7,7 +7,7 @@ const { lang, t, home } = useT(Astro.currentLocale);
 const year = new Date().getFullYear();
 const nav = [
   ...servicesFor(lang).map((s) => ({ href: localizePath(lang, `/${s.slug}/`), label: t.services.items[s.index].title })),
-  { href: `${home}#portfolio`, label: t.nav.portfolio },
+  { href: localizePath(lang, '/works/'), label: t.nav.portfolio },
   { href: `${home}#process`, label: t.nav.process },
   { href: `${home}#why`, label: t.nav.why },
   { href: `${home}#faq`, label: t.nav.faq },

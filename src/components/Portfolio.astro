@@ -1,8 +1,9 @@
 ---
 import { projects } from '../data/projects';
-import { useT } from '../i18n';
+import { useT, localizePath } from '../i18n';
+import { works } from '../data/pages/works';
 
-const { t } = useT(Astro.currentLocale);
+const { lang, t } = useT(Astro.currentLocale);
 const pt = t.portfolio;
 
 // спільні дані проєкту + тексти поточною мовою
@@ -80,9 +81,11 @@ const rest = list.filter((p) => !p.featured);
       ))}
     </div>
   )}
+  <p class="all"><a class="btn btn--ghost" href={localizePath(lang, '/works/')}>{works[lang].allWorks}</a></p>
 </section>
 
 <style>
+  .all { margin-top: clamp(2.5rem, 6vw, 4rem); text-align: center; }
   .cases { display: grid; gap: clamp(3rem, 7vw, 5.5rem); }
   .case { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(1.5rem, 4vw, 3.5rem); align-items: center; }
 
