@@ -4,6 +4,7 @@ import type { Locale } from '../../i18n';
 import type { ServicePageText, ServiceUi } from './types';
 import landing from './landing';
 import businessCard from './business-card-website';
+import multipage from './multipage-website';
 
 export interface ServiceDef {
   slug: string;
@@ -19,7 +20,7 @@ export interface ServiceDef {
 export const services: ServiceDef[] = [
   { slug: 'landing', index: 0, works: ['carwrapping', 'barbershop', 'skincenter'], art: 'carwrapping', text: landing },
   { slug: 'business-card-website', index: 1, works: ['barbershop', 'carwrapping', 'skincenter'], art: 'barbershop', text: businessCard },
-  { slug: 'multipage-website', index: 2, works: ['revival', 'skincenter', 'pawn'], art: 'skincenter', text: {} },
+  { slug: 'multipage-website', index: 2, works: ['revival', 'skincenter', 'pawn'], art: 'skincenter', text: multipage },
 ];
 
 export const serviceUi: Record<Locale, ServiceUi> = {
