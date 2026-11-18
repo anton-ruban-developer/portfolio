@@ -1,12 +1,13 @@
 ---
 import { site, emailEncoded, emailMasked } from '../data/site';
 import { useT, localizePath } from '../i18n';
+import { servicesFor } from '../data/services';
 
 const { lang, t, home } = useT(Astro.currentLocale);
 const year = new Date().getFullYear();
 const nav = [
+  ...servicesFor(lang).map((s) => ({ href: localizePath(lang, `/${s.slug}/`), label: t.services.items[s.index].title })),
   { href: `${home}#portfolio`, label: t.nav.portfolio },
-  { href: `${home}#services`, label: t.nav.services },
   { href: `${home}#process`, label: t.nav.process },
   { href: `${home}#why`, label: t.nav.why },
   { href: `${home}#faq`, label: t.nav.faq },

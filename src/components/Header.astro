@@ -1,12 +1,20 @@
 ---
 import { site } from '../data/site';
 import { useT, locales, langMeta, stripLocale, localizePath } from '../i18n';
+import { servicesFor } from '../data/services';
 
 const { lang, t, home } = useT(Astro.currentLocale);
 
-const links = [
+// сторінки послуг (підменю «Послуги»): лише ті, що вже є цією мовою
+const current = Astro.url.pathname.replace(/\/?$/, '/');
+const serviceLinks = servicesFor(lang).map((s) => {
+  const href = localizePath(lang, `/${s.slug}/`);
+  return { href, label: t.services.items[s.index].title, price: t.services.items[s.index].price, active: href === current };
+});
+
+const links: { href: string; label: string; sub?: typeof serviceLinks }[] = [
+  { href: `${home}#services`, label: t.nav.services, sub: serviceLinks },
   { href: `${home}#portfolio`, label: t.nav.portfolio },
-  { href: `${home}#services`, label: t.nav.services },
   { href: `${home}#process`, label: t.nav.process },
   { href: `${home}#why`, label: t.nav.why },
   { href: `${home}#faq`, label: t.nav.faq },
@@ -27,8 +35,19 @@ const langs = locales.map((l) => ({ code: l, href: localizePath(l, pagePath), ..
     </a>
 
     <nav id="menu" class="menu">
-      <ul>
-        {links.map((l, i) => <li style={`--i:${i}`}><a href={l.href}>{l.label}</a></li>)}
+      <ul class="main">
+        {links.map((l, i) => (
+          <li style={`--i:${i}`} class:list={{ 'has-sub': l.sub?.length }}>
+            <a href={l.href} aria-current={l.sub?.some((s) => s.active) ? 'true' : undefined}>{l.label}</a>
+            {l.sub && l.sub.length > 0 && (
+              <ul class="sub">
+                {l.sub.map((s) => (
+                  <li><a href={s.href} aria-current={s.active ? 'page' : undefined}><span>{s.label}</span><small>{s.price}</small></a></li>
+                ))}
+              </ul>
+            )}
+          </li>
+        ))}
       </ul>
       <!-- низ меню на телефоні: статус і контакти (на десктопі прихований) -->
       <div class="menu-foot" style={`--i:${links.length}`}>
@@ -73,9 +92,32 @@ const langs = locales.map((l) => ({ code: l, href: localizePath(l, pagePath), ..
   .logo-text { font-family: var(--font-head); font-weight: 800; font-size: 1.15rem; color: var(--accent); }
 
   .menu { display: flex; align-items: center; gap: 1.5rem; margin-left: auto; }
-  .menu ul { display: flex; gap: 1.25rem; list-style: none; }
-  .menu ul a { color: var(--muted); text-decoration: none; transition: color .2s; white-space: nowrap; }
-  .menu ul a:hover { color: var(--text); }
+  .menu ul { list-style: none; }
+  .main { display: flex; gap: 1.25rem; }
+  .main > li > a { color: var(--muted); text-decoration: none; transition: color .2s; white-space: nowrap; }
+  .main > li > a:hover, .main > li > a[aria-current] { color: var(--text); }
+
+  /* підменю «Послуги»: випадає при наведенні або фокусі */
+  .has-sub { position: relative; }
+  .has-sub > a::after { content: '▾'; margin-left: .3rem; font-size: .75em; color: var(--accent); }
+  .sub {
+    position: absolute; top: 100%; left: -1rem; min-width: 290px; margin-top: .9rem; padding: .5rem;
+    display: grid; gap: .15rem;
+    background: #161b22; border: 1px solid rgba(255, 255, 255, .12); border-radius: 14px;
+    box-shadow: 0 24px 60px rgba(0, 0, 0, .5);
+    opacity: 0; visibility: hidden; transform: translateY(6px);
+    transition: opacity .2s, transform .2s, visibility 0s linear .2s;
+  }
+  /* невидимий «місток», щоб меню не закривалось, поки курсор іде вниз */
+  .sub::before { content: ''; position: absolute; left: 0; right: 0; top: -1rem; height: 1rem; }
+  .has-sub:hover .sub, .has-sub:focus-within .sub { opacity: 1; visibility: visible; transform: none; transition: opacity .2s, transform .2s; }
+  .sub a {
+    display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .65rem .8rem; border-radius: 10px;
+    color: var(--text); text-decoration: none; white-space: nowrap; transition: background .2s;
+  }
+  .sub a:hover, .sub a[aria-current] { background: rgba(255, 210, 0, .1); }
+  .sub a[aria-current] span { color: var(--accent); }
+  .sub small { color: var(--muted); font-size: .8rem; }
   .burger {
     display: none; width: 44px; height: 44px; background: none; border: 0; cursor: pointer;
     flex-direction: column; justify-content: center; align-items: center; gap: 5px;
@@ -133,26 +175,36 @@ const langs = locales.map((l) => ({ code: l, href: localizePath(l, pagePath), ..
       transition: clip-path .45s cubic-bezier(.7, 0, .2, 1), visibility 0s;
     }
 
-    .menu ul { flex-direction: column; gap: 0; counter-reset: m; }
-    .menu li { counter-increment: m; border-bottom: 1px solid rgba(255, 255, 255, .08); }
-    .menu ul a {
+    .main { flex-direction: column; gap: 0; counter-reset: m; }
+    .main > li { counter-increment: m; border-bottom: 1px solid rgba(255, 255, 255, .08); }
+    .main > li > a {
       display: flex; align-items: baseline; gap: 1rem; padding: .7rem 0;
       font-family: var(--font-head); font-weight: 700; letter-spacing: -.02em;
       font-size: clamp(1.6rem, 7vw, 2.6rem); line-height: 1.15; color: var(--text);
       transition: color .2s, transform .3s;
     }
-    .menu ul a::before {
+    .main > li > a::before {
       content: counter(m, decimal-leading-zero); font-family: var(--font-body);
       font-size: .8rem; font-weight: 700; letter-spacing: .1em; color: var(--accent);
     }
-    .menu ul a:hover, .menu ul a:focus-visible { color: var(--accent); transform: translateX(8px); }
+    .main > li > a:hover, .main > li > a:focus-visible { color: var(--accent); transform: translateX(8px); }
+    .has-sub > a::after { content: none; }
+
+    /* на телефоні підменю завжди відкрите: послуги «таблетками» під пунктом */
+    .sub {
+      position: static; min-width: 0; margin: 0 0 .9rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem;
+      background: none; border: 0; box-shadow: none; opacity: 1; visibility: visible; transform: none; transition: none;
+    }
+    .sub::before { content: none; }
+    .sub a { padding: .45rem .85rem; border: 1px solid rgba(255, 255, 255, .16); border-radius: 999px; font-size: .9rem; font-weight: 600; }
+    .sub small { display: none; }
 
     /* пункти виїжджають знизу по черзі */
-    .menu li, .menu-foot, .menu .btn {
+    .main > li, .menu-foot, .menu .btn {
       opacity: 0; transform: translateY(24px);
       transition: opacity .2s, transform .2s;
     }
-    .menu.open li, .menu.open .menu-foot, .menu.open .btn {
+    .menu.open .main > li, .menu.open .menu-foot, .menu.open .btn {
       opacity: 1; transform: none;
       transition: opacity .35s ease, transform .4s cubic-bezier(.2, .8, .2, 1);
       transition-delay: calc(.15s + var(--i, 0) * 40ms);
@@ -174,7 +226,7 @@ const langs = locales.map((l) => ({ code: l, href: localizePath(l, pagePath), ..
   }
 
   @media (max-width: 1160px) and (prefers-reduced-motion: reduce) {
-    .menu, .menu.open, .menu li, .menu-foot, .menu .btn, .burger span { transition: none !important; }
+    .menu, .menu.open, .main > li, .menu-foot, .menu .btn, .burger span { transition: none !important; }
     .menu-status i { animation: none; }
   }
   /* вузький телефон: логотип менший, щоб поруч помістились мови та бургер */
