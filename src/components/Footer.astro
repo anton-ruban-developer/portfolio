@@ -5,8 +5,9 @@ import { servicesFor } from '../data/services';
 
 const { lang, t, home } = useT(Astro.currentLocale);
 const year = new Date().getFullYear();
+// дві короткі колонки посилань замість одного довгого списку
+const serviceNav = servicesFor(lang).map((s) => ({ href: localizePath(lang, `/${s.slug}/`), label: t.services.items[s.index].title }));
 const nav = [
-  ...servicesFor(lang).map((s) => ({ href: localizePath(lang, `/${s.slug}/`), label: t.services.items[s.index].title })),
   { href: localizePath(lang, '/works/'), label: t.nav.portfolio },
   { href: `${home}#process`, label: t.nav.process },
   { href: `${home}#why`, label: t.nav.why },
@@ -21,7 +22,7 @@ const contacts = [
 ---
 
 <footer class="footer">
-  <div class="container top">
+  <div class="container cols">
     <div class="brand">
       <a class="logo" href={home} aria-label={`${site.name}: ${t.ui.toHome}`}>
         {site.logo
@@ -29,11 +30,18 @@ const contacts = [
           : <span class="logo-text">{site.name}</span>}
       </a>
       <p class="about">{t.footer.about}</p>
+      <span class="status"><i></i> {t.ui.acceptingProjects}</span>
     </div>
-    <span class="status"><i></i> {t.ui.acceptingProjects}</span>
-  </div>
 
-  <div class="container cols">
+    {serviceNav.length > 0 && (
+      <nav aria-label={t.nav.services}>
+        <h3>{t.nav.services}</h3>
+        <ul class="nav">
+          {serviceNav.map((l) => <li><a href={l.href}>{l.label}</a></li>)}
+        </ul>
+      </nav>
+    )}
+
     <nav aria-label={t.footer.navLabel}>
       <h3>{t.footer.sections}</h3>
       <ul class="nav">
@@ -49,17 +57,11 @@ const contacts = [
             <a href={c.href} target={c.ext ? '_blank' : undefined} rel={c.ext ? 'noopener' : undefined} data-email={c.email}>
               <span class="k">{c.label}</span>
               <span class="v" data-email-text={c.email ? true : undefined}>{c.value}</span>
-              <span class="arr" aria-hidden="true">↗</span>
             </a>
           </li>
         ))}
       </ul>
-    </div>
-
-    <div class="where">
-      <h3>{t.city}</h3>
-      <p class="clock"><time id="kh-time">--:--</time><small>{t.footer.timeNote}</small></p>
-      <p class="muted">{t.footer.worldwide}</p>
+      <p class="clock">{t.city} · <time id="kh-time">--:--</time> <small>{t.footer.timeNote}</small></p>
     </div>
   </div>
 
@@ -93,14 +95,10 @@ const contacts = [
     mask-image: radial-gradient(ellipse at 50% 0%, #000 10%, transparent 65%);
   }
 
-  .top {
-    display: flex; flex-wrap: wrap; align-items: flex-start; justify-content: space-between; gap: 1.5rem;
-    padding: clamp(3rem, 6vw, 4.5rem) 0 2.5rem; border-bottom: 1px solid rgba(255, 255, 255, .08);
-  }
   .logo { display: inline-flex; align-items: center; text-decoration: none; }
   .logo img { height: 40px; width: auto; }
   .logo-text { font-family: var(--font-head); font-weight: 800; font-size: 1.2rem; color: var(--accent); }
-  .about { margin-top: .9rem; color: var(--muted); max-width: 40ch; }
+  .about { margin: .8rem 0 1rem; color: var(--muted); font-size: .9rem; max-width: 34ch; }
   .status {
     display: inline-flex; align-items: center; gap: .6rem; padding: .5rem 1rem; border-radius: 999px;
     border: 1px solid rgba(40, 200, 64, .35); background: rgba(40, 200, 64, .08); font-size: .85rem; font-weight: 600;
@@ -108,11 +106,12 @@ const contacts = [
   .status i { width: 8px; height: 8px; border-radius: 50%; background: #28c840; animation: pulse 2s infinite; }
   @keyframes pulse { to { box-shadow: 0 0 0 8px rgba(40, 200, 64, 0); } }
 
-  .cols { display: grid; grid-template-columns: 1fr 1.3fr 1fr; gap: 2.5rem; padding: 2.5rem 0 clamp(2.5rem, 6vw, 4rem); }
-  h3 { margin-bottom: 1rem; font-family: var(--font-body); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
+  .cols { display: grid; grid-template-columns: 1.4fr .9fr .8fr 1.2fr; gap: 2rem; padding: clamp(2.5rem, 5vw, 3.5rem) 0 2rem; }
+  h3 { margin-bottom: .8rem; font-family: var(--font-body); font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .14em; color: var(--muted); }
   ul { list-style: none; }
 
-  .nav { display: grid; gap: .55rem; }
+  .nav { display: grid; gap: .4rem; }
+  .nav a { font-size: .95rem; }
   .nav a { position: relative; text-decoration: none; color: var(--text); transition: color .2s, padding .25s; }
   .nav a::before {
     content: ''; position: absolute; left: 0; top: 50%; width: 0; height: 2px; background: var(--accent);
@@ -121,21 +120,15 @@ const contacts = [
   .nav a:hover { color: var(--accent); padding-left: 1.1rem; }
   .nav a:hover::before { width: .7rem; }
 
-  .contacts { display: grid; gap: .5rem; }
-  .contacts a {
-    display: grid; grid-template-columns: 5.5rem 1fr auto; align-items: center; gap: .75rem;
-    padding: .7rem 0; border-bottom: 1px solid rgba(255, 255, 255, .07); text-decoration: none; color: var(--text);
-  }
+  .contacts { display: grid; gap: .45rem; }
+  .contacts a { display: grid; grid-template-columns: 4.8rem 1fr; align-items: baseline; gap: .5rem; text-decoration: none; color: var(--text); }
   .k { color: var(--muted); font-size: .8rem; }
   .v { font-weight: 600; overflow-wrap: anywhere; transition: color .2s; }
-  .arr { color: var(--muted); transition: transform .25s, color .2s; }
-  .contacts a:hover .v, .contacts a:hover .arr { color: var(--accent); }
-  .contacts a:hover .arr { transform: translate(3px, -3px); }
+  .v { font-size: .95rem; }
+  .contacts a:hover .v { color: var(--accent); }
 
-  .clock { display: grid; margin-bottom: .75rem; }
-  .clock time { font-family: var(--font-head); font-weight: 700; font-size: clamp(2rem, 4vw, 2.8rem); line-height: 1; font-variant-numeric: tabular-nums; }
-  .clock small { margin-top: .4rem; color: var(--muted); font-size: .8rem; }
-  .muted { color: var(--muted); font-size: .92rem; max-width: 30ch; }
+  .clock { margin-top: 1rem; color: var(--muted); font-size: .85rem; }
+  .clock time { color: var(--text); font-weight: 700; font-variant-numeric: tabular-nums; }
 
   /* величезна назва бренду: заливка без контуру (контур на змінному шрифті дає артефакти) */
   .mega-wrap { padding: 0 1rem; text-align: center; overflow: hidden; }
@@ -153,7 +146,7 @@ const contacts = [
 
   .bottom {
     display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: .75rem;
-    padding: 1.5rem 0 2rem; color: var(--muted); font-size: .85rem;
+    padding: 1rem 0 1.5rem; color: var(--muted); font-size: .85rem;
   }
   .privacy { margin-left: .5rem; color: var(--muted); }
   .privacy:hover { color: var(--accent); }
@@ -165,13 +158,12 @@ const contacts = [
   .up:hover { border-color: var(--accent); color: var(--accent); }
   .up:hover span { transform: translateY(-3px); }
 
-  @media (max-width: 860px) {
-    .cols { grid-template-columns: 1fr 1fr; }
-    .cols > div:nth-child(2) { grid-column: 1 / -1; grid-row: 1; }
+  @media (max-width: 960px) {
+    .cols { grid-template-columns: 1fr 1fr; gap: 1.75rem 2rem; }
   }
   @media (max-width: 520px) {
-    .cols { grid-template-columns: 1fr; }
-    .contacts a { grid-template-columns: 4.5rem 1fr auto; }
+    /* на телефоні: бренд і контакти на всю ширину, дві колонки посилань поруч */
+    .brand, .cols > div:last-child { grid-column: 1 / -1; }
   }
   @media (prefers-reduced-motion: reduce) {
     .mega { transition: none; }
