@@ -2,7 +2,15 @@
 import { site, emailEncoded, emailMasked } from '../data/site';
 import { useT, localizePath } from '../i18n';
 
+interface Props {
+  title?: string;
+  lead?: string;
+  /** назва тарифу, яку одразу обрано в полі «Що потрібно» */
+  preset?: string;
+}
+
 const { lang, t } = useT(Astro.currentLocale);
+const { title = t.contact.title, lead = t.contact.lead, preset } = Astro.props;
 const privacyHref = localizePath(lang, '/privacy/');
 const f = t.contact.form;
 ---
@@ -10,8 +18,8 @@ const f = t.contact.form;
 <section class="section container" id="contact">
   <div class="wrap" class:list={{ solo: !site.formKey }}>
     <div class="info">
-      <h2>{t.contact.title}</h2>
-      <p class="lead">{t.contact.lead}</p>
+      <h2>{title}</h2>
+      <p class="lead">{lead}</p>
 
       <ul class="links">
         <li>
@@ -59,7 +67,7 @@ const f = t.contact.form;
         <label>
           {f.project}
           <select name="project">
-            {t.services.items.map((s) => <option value={s.title}>{s.title}</option>)}
+            {t.services.items.map((s) => <option value={s.title} selected={s.title === preset}>{s.title}</option>)}
             <option value={f.other}>{f.other}</option>
           </select>
         </label>

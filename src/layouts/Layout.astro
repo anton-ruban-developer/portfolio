@@ -17,10 +17,12 @@ interface Props {
   /** за замовчуванням беруться з словника мови (meta.title / meta.description) */
   title?: string;
   description?: string;
+  /** додаткова розмітка Schema.org сторінки (FAQPage, Service, BreadcrumbList…) */
+  schema?: Record<string, unknown>[];
 }
 
 const { lang, t } = useT(Astro.currentLocale);
-const { title = t.meta.title, description = t.meta.description } = Astro.props;
+const { title = t.meta.title, description = t.meta.description, schema = [] } = Astro.props;
 const fontPreloads = lang === 'en' ? [unbLatin, interLatin] : [unbCyr, interCyr];
 
 // якщо `site` не задано в astro.config, беремо адресу поточного запиту
@@ -79,6 +81,7 @@ const jsonLd = {
     <meta name="twitter:card" content="summary_large_image" />
 
     <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+    {schema.map((s) => <script type="application/ld+json" set:html={JSON.stringify({ '@context': 'https://schema.org', ...s })} />)}
     <script is:inline>
       (function () {
         var d = document.documentElement, n = navigator;

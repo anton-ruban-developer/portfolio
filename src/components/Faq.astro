@@ -2,16 +2,22 @@
 import { useT } from '../i18n';
 import { site } from '../data/site';
 
+interface Props {
+  items?: { q: string; a: string }[];
+  title?: string;
+  lead?: string;
+}
+
 const { t } = useT(Astro.currentLocale);
-const faq = t.faq.items;
+const { items: faq = t.faq.items, title = t.faq.title, lead = t.faq.lead } = Astro.props;
 ---
 
 <section class="section container" id="faq">
   <div class="wrap">
     <div class="side" data-reveal>
       <p class="eyebrow">FAQ</p>
-      <h2>{t.faq.title}</h2>
-      <p class="lead">{t.faq.lead}</p>
+      <h2>{title}</h2>
+      <p class="lead">{lead}</p>
       <a class="btn" href={site.telegram} target="_blank" rel="noopener">{t.faq.ask}</a>
     </div>
 

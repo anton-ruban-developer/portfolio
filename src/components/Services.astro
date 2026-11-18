@@ -1,8 +1,14 @@
 ---
-import { useT } from '../i18n';
+import { useT, localizePath } from '../i18n';
+import { servicesFor, serviceUi } from '../data/services';
 import { promoEnd } from '../data/site';
 
-const { t } = useT(Astro.currentLocale);
+const { lang, t } = useT(Astro.currentLocale);
+// посилання «Детальніше» на сторінку тарифу, якщо вона вже є цією мовою
+const pageOf = (i: number) => {
+  const s = servicesFor(lang).find((x) => x.index === i);
+  return s ? localizePath(lang, `/${s.slug}/`) : null;
+};
 const st = t.services;
 // акцію не рендеримо, якщо сайт зібрано вже після її кінця; якщо до, то її сховає скрипт нижче
 const promoActive = Date.now() < promoEnd.getTime();
@@ -34,6 +40,7 @@ const promoActive = Date.now() < promoEnd.getTime();
           </div>
         </div>
         <a class="btn" href="#contact" data-service={s.title}>{t.ui.discuss}</a>
+        {pageOf(i) && <a class="more" href={pageOf(i)}>{serviceUi[lang].more}</a>}
       </article>
     ))}
   </div>
@@ -56,6 +63,9 @@ const promoActive = Date.now() < promoEnd.getTime();
   .label { display: block; color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
   .meta strong { font-size: 1.1rem; }
   .card .btn { margin-top: .5rem; }
+  .more { align-self: center; font-weight: 700; font-size: .9rem; color: var(--accent); text-decoration: none; }
+  .more:hover { text-decoration: underline; }
+  .card.popular .more { color: #111; }
 
   /* популярний тариф: повністю жовтий */
   .card.popular {
