@@ -18,7 +18,7 @@ const links: { href: string; label: string; sub?: typeof serviceLinks }[] = [
   { href: `${home}#process`, label: t.nav.process },
   { href: `${home}#why`, label: t.nav.why },
   { href: `${home}#faq`, label: t.nav.faq },
-  { href: `${home}#contact`, label: t.nav.contact },
+  { href: localizePath(lang, '/contacts/'), label: t.nav.contact },
 ];
 
 // перемикач мов: посилання на цю ж сторінку іншою мовою

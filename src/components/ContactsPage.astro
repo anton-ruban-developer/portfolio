@@ -1,0 +1,198 @@
+---
+// Сторінка «Контакти»: /contacts/, /ru/contacts/, /en/contacts/.
+// Тексти: src/data/pages/contacts.ts. Контакти й форма: компонент Contact (дані з src/data/site.ts).
+import Layout from '../layouts/Layout.astro';
+import Contact from './Contact.astro';
+import { site } from '../data/site';
+import { contacts } from '../data/pages/contacts';
+import { serviceUi, servicesFor } from '../data/services';
+import { useT, localizePath } from '../i18n';
+
+const { lang, t, home } = useT(Astro.currentLocale);
+const c = contacts[lang];
+const ui = serviceUi[lang];
+const url = (path: string) => new URL(localizePath(lang, path), Astro.site ?? Astro.url).href;
+
+const services = servicesFor(lang).map((s) => ({
+  href: localizePath(lang, `/${s.slug}/`),
+  title: t.services.items[s.index].title,
+  price: t.services.items[s.index].price,
+  term: t.services.items[s.index].term,
+}));
+
+// Розмітка для Google: сторінка контактів з телефоном і месенджером
+const schema = [
+  {
+    '@type': 'ContactPage',
+    name: c.h1,
+    description: c.metaDescription,
+    url: url('/contacts/'),
+    mainEntity: {
+      '@type': 'ProfessionalService',
+      name: site.name,
+      url: url('/'),
+      telephone: site.phone,
+      areaServed: lang === 'en' ? ['UA', 'US'] : 'UA',
+      address: { '@type': 'PostalAddress', addressLocality: t.city.split(',')[0], addressCountry: 'UA' },
+      contactPoint: { '@type': 'ContactPoint', contactType: 'customer service', telephone: site.phone, availableLanguage: ['Ukrainian', 'Russian', 'English'] },
+      sameAs: [site.telegram],
+    },
+  },
+  {
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: ui.home, item: url('/') },
+      { '@type': 'ListItem', position: 2, name: c.eyebrow, item: url('/contacts/') },
+    ],
+  },
+];
+---
+
+<Layout title={c.metaTitle} description={c.metaDescription} schema={schema}>
+  <main>
+    <section class="intro band">
+      <div class="container">
+        <nav class="crumbs" aria-label="breadcrumbs">
+          <a href={home}>{ui.home}</a> <span aria-hidden="true">/</span> <span aria-current="page">{c.eyebrow}</span>
+        </nav>
+        <p class="eyebrow">{c.eyebrow}</p>
+        <h1>{c.h1}</h1>
+        <p class="text">{c.intro}</p>
+        <span class="status"><i></i> {t.ui.acceptingProjects}</span>
+      </div>
+    </section>
+
+    <div class="band band--soft glow"><Contact title={c.formTitle} lead={c.formLead} /></div>
+
+    <div class="band band--yellow">
+      <section class="section container">
+        <h2>{c.next.title}</h2>
+        <p class="lead">{c.next.lead}</p>
+        <ol class="steps">
+          {c.next.steps.map((s, i) => (
+            <li data-reveal style={`--i:${i}`}>
+              <span class="num">{String(i + 1).padStart(2, '0')}</span>
+              <h3>{s.title}</h3>
+              <p>{s.text}</p>
+            </li>
+          ))}
+        </ol>
+      </section>
+    </div>
+
+    <div class="band dots">
+      <section class="section container bottom">
+        <div class="where">
+          <h2>{c.where.title}</h2>
+          <p class="para">{c.where.text}</p>
+          <div class="clock">
+            <span class="label">{c.where.time}</span>
+            <strong><time data-kyiv-time>--:--</time></strong>
+            <small>{c.where.timeNote}</small>
+          </div>
+        </div>
+        {services.length > 0 && (
+          <div>
+            <h2>{c.servicesTitle}</h2>
+            <div class="services">
+              {services.map((s) => (
+                <a class="service spot" href={s.href}>
+                  <span class="name">{s.title}</span>
+                  <span class="meta">{s.price} · {s.term}</span>
+                  <span class="arr" aria-hidden="true">→</span>
+                </a>
+              ))}
+            </div>
+          </div>
+        )}
+      </section>
+    </div>
+  </main>
+</Layout>
+
+<style>
+  .intro { overflow: hidden; padding: clamp(2rem, 6vw, 4.5rem) 0 clamp(2.5rem, 6vw, 4rem); }
+  .intro::before {
+    content: ''; position: absolute; inset: 0; z-index: -1;
+    background:
+      radial-gradient(900px 520px at 88% -6%, rgba(7, 117, 243, .24), transparent 62%),
+      radial-gradient(700px 480px at 0% 22%, rgba(255, 210, 0, .12), transparent 60%);
+  }
+  .intro::after {
+    content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image:
+      linear-gradient(rgba(255, 255, 255, .045) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(255, 255, 255, .045) 1px, transparent 1px);
+    background-size: 56px 56px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 15%, transparent 70%);
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 15%, transparent 70%);
+  }
+  .crumbs { color: var(--muted); font-size: .85rem; margin-bottom: 1.75rem; }
+  .crumbs a { color: var(--muted); text-decoration: none; }
+  .crumbs a:hover { color: var(--accent); }
+  .crumbs [aria-current] { color: var(--text); }
+  h1 { font-size: clamp(2rem, 4.6vw, 3.5rem); line-height: 1.05; font-weight: 800; max-width: 18ch; margin-bottom: 1.25rem; }
+  .text { color: var(--muted); font-size: 1.1rem; max-width: 62ch; margin-bottom: 1.5rem; }
+  .status {
+    display: inline-flex; align-items: center; gap: .6rem; padding: .5rem 1rem; border-radius: 999px;
+    border: 1px solid rgba(40, 200, 64, .35); background: rgba(40, 200, 64, .08); font-size: .9rem; font-weight: 600;
+  }
+  .status i { width: 8px; height: 8px; border-radius: 50%; background: #28c840; animation: pulse 2s infinite; }
+  @keyframes pulse { to { box-shadow: 0 0 0 8px rgba(40, 200, 64, 0); } }
+
+  .glow::after {
+    content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background:
+      radial-gradient(700px 400px at 85% 20%, rgba(7, 117, 243, .14), transparent 65%),
+      radial-gradient(500px 360px at 10% 90%, rgba(255, 210, 0, .08), transparent 65%);
+  }
+  .dots::before {
+    content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+    background-image: radial-gradient(rgba(255, 255, 255, .13) 1px, transparent 1.4px);
+    background-size: 22px 22px;
+    -webkit-mask-image: radial-gradient(ellipse 60% 70% at 100% 50%, #000, transparent 75%);
+    mask-image: radial-gradient(ellipse 60% 70% at 100% 50%, #000, transparent 75%);
+  }
+
+  /* кроки на жовтому фоні */
+  .steps { list-style: none; display: grid; gap: 2rem 1.75rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); }
+  .steps li { position: relative; padding-top: 1.4rem; border-top: 3px solid #111; }
+  .steps li::before { content: ''; position: absolute; top: -9px; left: 0; width: 15px; height: 15px; border-radius: 50%; background: #111; }
+  .num { display: block; margin-bottom: .8rem; font-family: var(--font-head); font-weight: 800; line-height: 1; font-size: clamp(2.8rem, 5.5vw, 4.2rem); color: transparent; -webkit-text-stroke: 2px #111; }
+  .steps h3 { font-size: 1.1rem; margin-bottom: .4rem; }
+  .steps p { color: var(--muted); font-size: .95rem; }
+
+  /* де я працюю + послуги */
+  .bottom { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2rem, 5vw, 4rem); align-items: start; }
+  .para { color: var(--muted); max-width: 52ch; margin-bottom: 1.5rem; }
+  .clock {
+    display: inline-grid; gap: .1rem; padding: 1rem 1.4rem; border-radius: 16px;
+    border: 1px solid rgba(255, 210, 0, .3); background: rgba(255, 210, 0, .05);
+  }
+  .label { color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
+  .clock strong { font-family: var(--font-head); font-size: 2.2rem; line-height: 1.1; color: var(--accent); font-variant-numeric: tabular-nums; }
+  .clock small { color: var(--muted); font-size: .8rem; }
+  .services { display: grid; gap: .75rem; }
+  .service {
+    display: grid; grid-template-columns: 1fr auto; gap: .1rem 1rem; align-items: center; padding: 1rem 1.25rem;
+    text-decoration: none; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px;
+    transition: border-color .2s, transform .2s;
+  }
+  .service:hover { border-color: var(--accent); transform: translateY(-2px); }
+  .name { font-weight: 700; font-size: 1.05rem; }
+  .meta { grid-column: 1; color: var(--muted); font-size: .88rem; }
+  .arr { grid-column: 2; grid-row: 1 / span 2; color: var(--accent); font-size: 1.4rem; }
+
+  @media (max-width: 860px) { .bottom { grid-template-columns: 1fr; } }
+  :global(.lite) .status i { animation: none; }
+  @media (prefers-reduced-motion: reduce) { .status i { animation: none; } }
+</style>
+
+<script>
+  // поточний час у Харкові
+  const el = document.querySelector<HTMLElement>('[data-kyiv-time]');
+  const fmt = new Intl.DateTimeFormat('uk-UA', { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Kyiv' });
+  const tick = () => { if (el) el.textContent = fmt.format(new Date()); };
+  tick();
+  setInterval(tick, 15000);
+</script>
