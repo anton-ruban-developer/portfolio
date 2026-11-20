@@ -70,9 +70,6 @@ const schema = [
 ];
 
 const artProject = projects.find((pr) => pr.id === def.art);
-// довге слово в H1 («багатосторінкового») не має розпирати колонку: зменшуємо шрифт пропорційно
-const longestWord = Math.max(...p.h1.split(/\s+/).map((w) => w.length));
-const h1Scale = Math.min(1, 13 / longestWord).toFixed(2);
 
 const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')} 700w, ${img} 1200w`;
 ---
@@ -86,7 +83,7 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
             <a href={home}>{ui.home}</a> <span aria-hidden="true">/</span> <a href={`${home}#services`}>{ui.services}</a> <span aria-hidden="true">/</span> <span aria-current="page">{tariff.title}</span>
           </nav>
           <p class="eyebrow">{p.eyebrow}</p>
-          <h1 style={`--h1-scale:${h1Scale}`}>{p.h1}</h1>
+          <h1>{p.h1}</h1>
           <p class="text">{p.intro}</p>
           <div class="facts">
             <div><span class="label">{ui.price}</span><strong>{tariff.price}</strong></div>
@@ -265,12 +262,11 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
       radial-gradient(900px 520px at 88% -6%, rgba(7, 117, 243, .24), transparent 62%),
       radial-gradient(700px 480px at 0% 22%, rgba(255, 210, 0, .12), transparent 60%);
   }
-  .intro-grid { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
+  .intro-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(2rem, 5vw, 4rem); align-items: center; }
   .crumbs { color: var(--muted); font-size: .85rem; margin-bottom: 1.75rem; }
   .crumbs a { color: var(--muted); text-decoration: none; }
   .crumbs a:hover { color: var(--accent); }
   .crumbs [aria-current] { color: var(--text); }
-  h1 { font-size: calc(clamp(2rem, 4.6vw, 3.5rem) * var(--h1-scale, 1)); line-height: 1.05; font-weight: 800; max-width: 16ch; margin-bottom: 1.25rem; }
   .text { color: var(--muted); font-size: 1.1rem; max-width: 58ch; margin-bottom: 1.75rem; }
   .facts {
     display: inline-flex; flex-wrap: wrap; gap: 1rem 2.5rem; margin-bottom: 2rem; padding: .9rem 1.4rem;
@@ -279,6 +275,10 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
   .facts strong { font-family: var(--font-head); font-size: clamp(1.15rem, 2.4vw, 1.5rem); color: var(--accent); }
   .label { display: block; color: var(--muted); font-size: .75rem; text-transform: uppercase; letter-spacing: .08em; }
   .actions { display: flex; flex-wrap: wrap; gap: .75rem; }
+  @media (max-width: 560px) {
+    .actions { flex-wrap: nowrap; gap: .5rem; }
+    .actions .btn { flex: 1 1 0; min-width: 0; padding: .6rem .7rem; font-size: .85rem; text-align: center; line-height: 1.25; }
+  }
 
   .para { color: var(--muted); max-width: 62ch; }
   .para + .para { margin-top: 1rem; }
@@ -353,7 +353,6 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
     background: radial-gradient(500px 260px at 100% 0%, rgba(255, 210, 0, .14), transparent 70%), linear-gradient(135deg, #18202b, #11161d);
   }
   .compare::after { content: '?'; position: absolute; right: 2rem; bottom: -2.5rem; font-family: var(--font-head); font-weight: 800; font-size: 11rem; line-height: 1; color: rgba(255, 210, 0, .08); pointer-events: none; }
-  .compare h2 { font-size: clamp(1.3rem, 2.8vw, 1.8rem); }
   .compare p { position: relative; color: var(--muted); max-width: 70ch; margin-bottom: 1rem; }
   .link { position: relative; color: var(--accent); font-weight: 700; text-decoration: none; }
   .link:hover { text-decoration: underline; }
@@ -366,7 +365,10 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
   .row { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
 
   @media (max-width: 900px) {
-    .intro-grid { grid-template-columns: 1fr; }
+    /* телефон/планшет: більше повітря над ілюстрацією, менше порожнечі під нею */
+    .intro-grid { grid-template-columns: 1fr; gap: 3.25rem; }
+    .intro { padding-bottom: 1.5rem; }
+    .about { padding-top: 2.5rem; }
   }
   @media (max-width: 860px) {
     .about, .price { grid-template-columns: 1fr; }
