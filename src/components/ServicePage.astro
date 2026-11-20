@@ -168,7 +168,7 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
 
     {works.length > 0 && (
       <div class="band dots">
-        <section class="section container">
+        <section class="section container works-section">
           <h2>{ui.worksTitle}</h2>
           <p class="lead">{ui.worksLead}</p>
           <div class="works">
@@ -369,6 +369,9 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
     .intro-grid { grid-template-columns: 1fr; gap: 3.25rem; }
     .intro { padding-bottom: 1.5rem; }
     .about { padding-top: 2.5rem; }
+    /* «Приклади робіт» → рамка порівняння: прибираємо подвійний відступ */
+    .works-section { padding-bottom: 1.5rem; }
+    .compare { margin-block: 1rem 3rem; }
   }
   @media (max-width: 860px) {
     .about, .price { grid-template-columns: 1fr; }
