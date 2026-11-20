@@ -86,7 +86,7 @@ export const contacts: Record<Locale, ContactsText> = {
       steps: [
         { title: 'Reply', text: 'I reply by email, WhatsApp or Telegram, whichever you prefer, and ask a few clarifying questions.' },
         { title: 'Short brief', text: 'We discuss your goals, audience and websites you like, by message or on a Zoom / Google Meet call at a time that suits your time zone.' },
-        { title: 'Price and timeline', text: 'I suggest a website format and give you the price in USD and a timeline. We fix them before we start.' },
+        { title: 'Price and timeline', text: 'I suggest a website format and give you the price in USD and a timeline. We fix them before we start; payment is by PayPal invoice.' },
       ],
     },
     where: {

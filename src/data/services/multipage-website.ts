@@ -233,7 +233,7 @@ const multipage: Partial<Record<Locale, ServicePageText>> = {
       title: 'How much does a multi-page website cost',
       text: [
         'A multi-page website starts from $850. I give an exact quote after the brief and site structure, and fix it before we start.',
-        'Payment in parts: a deposit before we start and the rest after you approve the result. The domain and hosting are paid separately, and I’ll help you choose the best option.',
+        'Payment in parts by PayPal invoice (any card, no PayPal account needed): a deposit before we start and the rest after you approve the result. The domain and hosting are paid separately, and I’ll help you choose the best option.',
       ],
       factors: [
         'Number of pages and sections',

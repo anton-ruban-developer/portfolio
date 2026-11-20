@@ -231,7 +231,7 @@ const landing: Partial<Record<Locale, ServicePageText>> = {
       title: 'How much does a landing page cost',
       text: [
         'A landing page starts from $350. I give an exact quote after a short brief and fix it before we start, so there are no surprises at the end.',
-        'Payment in parts: a deposit before we start and the rest after you approve the result. The domain and hosting are paid separately, and I’ll help you choose an affordable option.',
+        'Payment in parts by PayPal invoice (any card, no PayPal account needed): a deposit before we start and the rest after you approve the result. The domain and hosting are paid separately, and I’ll help you choose an affordable option.',
       ],
       factors: [
         'Number of sections on the page',
