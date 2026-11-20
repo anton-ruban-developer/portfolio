@@ -1,9 +1,11 @@
 ---
 import { site } from '../data/site';
 import { useT } from '../i18n';
+import { primaryCta } from '../data/cta';
 import HeroShots from './HeroShots.astro';
 
-const { t } = useT(Astro.currentLocale);
+const { lang, t } = useT(Astro.currentLocale);
+const cta = primaryCta(lang, t);
 
 // Заголовок по словах: кожне слово виїжджає знизу по черзі
 const { lead, accent } = t.hero;
@@ -25,7 +27,7 @@ const parsed = t.stats.map((s) => {
       </h1>
       <p class="lead">{t.hero.text}</p>
       <div class="actions">
-        <a class="btn" href={site.telegram} target="_blank" rel="noopener">{t.ui.telegramCta}</a>
+        <a class="btn" href={cta.href} target={cta.external ? '_blank' : undefined} rel={cta.external ? 'noopener' : undefined}>{cta.label}</a>
         <a class="btn btn--ghost" href="#portfolio">{t.hero.viewWork}</a>
       </div>
     </div>

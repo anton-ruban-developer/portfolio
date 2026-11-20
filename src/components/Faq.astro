@@ -1,6 +1,6 @@
 ---
 import { useT } from '../i18n';
-import { site } from '../data/site';
+import { primaryCta } from '../data/cta';
 
 interface Props {
   items?: { q: string; a: string }[];
@@ -8,7 +8,8 @@ interface Props {
   lead?: string;
 }
 
-const { t } = useT(Astro.currentLocale);
+const { lang, t } = useT(Astro.currentLocale);
+const cta = primaryCta(lang, t);
 const { items: faq = t.faq.items, title = t.faq.title, lead = t.faq.lead } = Astro.props;
 ---
 
@@ -18,7 +19,7 @@ const { items: faq = t.faq.items, title = t.faq.title, lead = t.faq.lead } = Ast
       <p class="eyebrow">FAQ</p>
       <h2>{title}</h2>
       <p class="lead">{lead}</p>
-      <a class="btn" href={site.telegram} target="_blank" rel="noopener">{t.faq.ask}</a>
+      <a class="btn" href={cta.href} target={cta.external ? '_blank' : undefined} rel={cta.external ? 'noopener' : undefined}>{t.faq.ask}</a>
     </div>
 
     <div class="list">

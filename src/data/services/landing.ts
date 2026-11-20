@@ -179,12 +179,12 @@ const landing: Partial<Record<Locale, ServicePageText>> = {
   en: {
     metaTitle: 'Landing Page Design & Development | Ruban Web Studio',
     metaDescription:
-      'A turnkey landing page in 3–5 days: custom design, mobile-friendly layout, leads straight to Telegram and basic SEO. From $250. Working with clients worldwide.',
+      'A turnkey landing page in 3–5 days: custom design, mobile-friendly layout, leads straight to Telegram and basic SEO. From $350. Working with clients worldwide.',
 
     eyebrow: 'Services · Landing page',
     h1: 'Turnkey landing page development',
     intro:
-      'A landing page is a one-page website that leads visitors to a single action: send a request, call or message you. I build turnkey landing pages for businesses in Ukraine and abroad, from structure and design to launch on your own domain.',
+      'A landing page is a one-page website that leads visitors to a single action: send a request, call or message you. I build turnkey landing pages for businesses in the US and worldwide, from structure and design to launch on your own domain.',
 
     about: {
       title: 'Who needs a landing page',
@@ -230,7 +230,7 @@ const landing: Partial<Record<Locale, ServicePageText>> = {
     price: {
       title: 'How much does a landing page cost',
       text: [
-        'A landing page starts from $250. I give an exact quote after a short brief and fix it before we start, so there are no surprises at the end.',
+        'A landing page starts from $350. I give an exact quote after a short brief and fix it before we start, so there are no surprises at the end.',
         'Payment in parts: a deposit before we start and the rest after you approve the result. The domain and hosting are paid separately, and I’ll help you choose an affordable option.',
       ],
       factors: [
@@ -249,7 +249,7 @@ const landing: Partial<Record<Locale, ServicePageText>> = {
 
     faq: [
       { q: 'How long does it take to build a landing page?', a: 'Usually 3–5 days from the approved brief to launch. If texts or photos need to be created from scratch, it may take a little longer. I confirm the exact timeline before we start.' },
-      { q: 'How much does a turnkey landing page cost?', a: 'From $250. The price depends on the number of sections, how ready your materials are, animations and the number of languages. The final price is fixed after the brief.' },
+      { q: 'How much does a turnkey landing page cost?', a: 'From $350. The price depends on the number of sections, how ready your materials are, animations and the number of languages. The final price is fixed after the brief.' },
       { q: 'Can you help with the copy?', a: 'Yes. If you don’t have texts, I write the structure and copy based on the brief, and you make edits. That’s the most common option.' },
       { q: 'Where will the leads go?', a: 'To Telegram and email, right after the form is submitted.' },
       { q: 'Is a landing page suitable for Google and Instagram ads?', a: 'Yes, that’s exactly what landing pages are made for. If you like, I connect Google Analytics so you can see how many visitors and requests the page gets.' },

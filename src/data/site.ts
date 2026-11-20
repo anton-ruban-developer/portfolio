@@ -5,6 +5,8 @@ export const site = {
   logo: '/portfolio/logo.svg',
   telegram: `https://t.me/${telegramUser}`,
   telegramHandle: `@${telegramUser}`,
+  /** WhatsApp на той самий номер (показується в англійській версії для закордонних клієнтів) */
+  whatsapp: 'https://wa.me/380958702674',
   email: 'hello@rubanweb.com',
   phone: '+380958702674',
   phoneLabel: '+38 (095) 870-26-74',

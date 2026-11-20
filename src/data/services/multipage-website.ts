@@ -181,12 +181,12 @@ const multipage: Partial<Record<Locale, ServicePageText>> = {
   en: {
     metaTitle: 'Multi-Page Website Development | Ruban Web Studio',
     metaDescription:
-      'A multi-page business website in 1–2 weeks: a separate page for each service, SEO-driven structure, blog, multiple languages and an optional admin panel. From $500.',
+      'A multi-page business website in 1–2 weeks: a separate page for each service, SEO-driven structure, blog, multiple languages and an optional admin panel. From $850.',
 
     eyebrow: 'Services · Multi-page website',
     h1: 'Multi-page website development for business',
     intro:
-      'A multi-page website is a full company website where every service, location or line of business has its own page. It brings clients from Google for dozens of different searches and presents your business professionally. I build turnkey multi-page websites for companies in Ukraine and abroad.',
+      'A multi-page website is a full company website where every service, location or line of business has its own page. It brings clients from Google for dozens of different searches and presents your business professionally. I build turnkey multi-page websites for companies in the US and worldwide.',
 
     about: {
       title: 'Who needs a multi-page website',
@@ -232,7 +232,7 @@ const multipage: Partial<Record<Locale, ServicePageText>> = {
     price: {
       title: 'How much does a multi-page website cost',
       text: [
-        'A multi-page website starts from $500. I give an exact quote after the brief and site structure, and fix it before we start.',
+        'A multi-page website starts from $850. I give an exact quote after the brief and site structure, and fix it before we start.',
         'Payment in parts: a deposit before we start and the rest after you approve the result. The domain and hosting are paid separately, and I’ll help you choose the best option.',
       ],
       factors: [
@@ -252,7 +252,7 @@ const multipage: Partial<Record<Locale, ServicePageText>> = {
 
     faq: [
       { q: 'How long does it take to build a multi-page website?', a: 'Usually 1–2 weeks from the approved brief to launch. A large site with many pages and languages may take longer; I confirm the exact timeline before we start.' },
-      { q: 'How much does a multi-page website cost?', a: 'From $500. The price depends on the number of pages, languages, blog, admin panel and how ready your materials are. The final price is fixed after the brief.' },
+      { q: 'How much does a multi-page website cost?', a: 'From $850. The price depends on the number of pages, languages, blog, admin panel and how ready your materials are. The final price is fixed after the brief.' },
       { q: 'Will I be able to edit the site myself?', a: 'Yes. If you need an admin panel, I’ll set it up so you can change texts, prices and photos yourself. Or just message me and I’ll make the edits.' },
       { q: 'Will a multi-page website help with Google rankings?', a: 'Yes, that’s its main advantage: a separate page for each service lets you appear in search for many queries. Rankings depend on competition and time, but the right structure is the foundation.' },
       { q: 'Can the website be in several languages?', a: 'Yes. I set up language versions so Google shows people the page in their language and doesn’t treat the versions as duplicates.' },

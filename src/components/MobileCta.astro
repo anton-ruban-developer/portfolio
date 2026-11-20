@@ -1,15 +1,17 @@
 ---
 import { site } from '../data/site';
 import { useT } from '../i18n';
+import { primaryCta } from '../data/cta';
 
-const { t } = useT(Astro.currentLocale);
+const { lang, t } = useT(Astro.currentLocale);
+const cta = primaryCta(lang, t);
 ---
 
 <!-- Закріплена кнопка Telegram на телефоні: з'являється після першого екрана і ховається біля форми контактів -->
 <div class="mcta" aria-hidden="true">
-  <a class="btn" href={site.telegram} target="_blank" rel="noopener" tabindex="-1">
-    <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.8 19c-.2 1-.8 1.3-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.8-7.9c.4-.3-.1-.5-.6-.2L6.8 13l-4.6-1.4c-1-.3-1-1 .2-1.5l18-6.9c.8-.3 1.6.2 1.5 1.1z"/></svg>
-    {t.ui.telegramCta}
+  <a class="btn" href={cta.href} target={cta.external ? '_blank' : undefined} rel={cta.external ? 'noopener' : undefined} tabindex="-1">
+    {cta.telegram && <svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><path fill="currentColor" d="M21.9 4.3 18.8 19c-.2 1-.8 1.3-1.7.8l-4.7-3.5-2.3 2.2c-.3.3-.5.5-1 .5l.3-4.8 8.8-7.9c.4-.3-.1-.5-.6-.2L6.8 13l-4.6-1.4c-1-.3-1-1 .2-1.5l18-6.9c.8-.3 1.6.2 1.5 1.1z"/></svg>}
+    {cta.label}
   </a>
 </div>
 

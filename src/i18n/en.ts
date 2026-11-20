@@ -5,7 +5,7 @@ const en: Dict = {
   meta: {
     title: 'Freelance Web Developer for Small Business Websites | Ruban Web Studio',
     description:
-      'Landing pages, small business websites and multi-page websites built turnkey on WordPress or custom code. Fast, mobile-friendly and SEO-ready. 10+ projects for clients in the US and Ukraine.',
+      'Turnkey landing pages, small business websites and multi-page websites for businesses in the US and worldwide. Fast, mobile-friendly, SEO-ready. Fluent English, prices in USD.',
   },
   city: 'Kharkiv, Ukraine',
   nav: {
@@ -23,12 +23,13 @@ const en: Dict = {
     openMenu: 'Open menu',
     language: 'Site language',
     acceptingProjects: 'Taking new projects',
+    primaryCta: { label: 'Get a free quote', path: '/contacts/' },
   },
   hero: {
-    eyebrow: 'Website development · Kharkiv, Ukraine',
+    eyebrow: 'Web developer for US & international businesses',
     lead: ['Websites', 'for', 'small', 'business', 'that'],
     accent: ['win', 'clients'],
-    text: 'Turnkey landing pages, small business websites and multi-page websites: fast, mobile-friendly and ready for search.',
+    text: 'Turnkey landing pages, business websites and multi-page websites: fast, mobile-friendly and ready for Google. Fluent English, clear prices in USD.',
     viewWork: 'See my work',
     chip: 'Real project',
   },
@@ -36,7 +37,7 @@ const en: Dict = {
     { value: '10+', unit: 'sites', label: 'launched for clients' },
     { value: '1', unit: 'month', label: 'of free support' },
     { value: '3–5', unit: 'days', label: 'to launch a landing page' },
-    { value: '100%', unit: '', label: 'mobile-friendly' },
+    { value: '4', unit: 'US', label: 'businesses in NY, TX and AZ' },
   ],
   stackLabel: 'Technologies I work with',
   portfolio: {
@@ -109,7 +110,7 @@ const en: Dict = {
           'Basic SEO and fast loading',
         ],
         term: '3–5 days',
-        price: 'from $250',
+        price: 'from $350',
       },
       {
         title: 'Business website',
@@ -123,7 +124,7 @@ const en: Dict = {
           'Edits after launch',
         ],
         term: '3–7 days',
-        price: 'from $350',
+        price: 'from $550',
         popular: true,
       },
       {
@@ -137,7 +138,7 @@ const en: Dict = {
           'Admin panel for editing content yourself, if needed',
         ],
         term: '1–2 weeks',
-        price: 'from $500',
+        price: 'from $850',
       },
     ],
   },
@@ -155,7 +156,7 @@ const en: Dict = {
   why: {
     eyebrow: 'Why me',
     title: 'Why clients like working with me',
-    lead: 'You get a finished website, not a headache: no middlemen, no endless meetings, no hidden fees.',
+    lead: 'Hiring a developer abroad should feel easy: fluent English, clear prices in USD and a finished website, with no middlemen or hidden fees.',
     codeComment: 'what you get',
     card: [
       ['speed', 'fast loading'],
@@ -166,9 +167,11 @@ const en: Dict = {
       ['support', 'help after launch'],
     ],
     points: [
-      { title: 'Direct, no account managers', text: 'You talk to the person who builds your site. Questions get answered in minutes, not passed down a chain.' },
+      { title: 'Direct, in fluent English', text: 'You talk to the person who builds your site, by email, WhatsApp, Telegram or a Zoom / Google Meet call. No account managers, nothing lost in translation.' },
+      { title: 'Works with your time zone', text: 'Kyiv is 7 hours ahead of New York. We schedule calls at a time that suits you, and progress updates are often ready when your day starts.' },
+      { title: 'Experience with US businesses', text: 'I’ve built websites for businesses in New York, Texas and Arizona, so I know what local clients look for: clear services and prices, locations and easy ways to book.' },
       { title: 'No bloat', text: 'I only add the plugins and tools a site actually needs, so it stays fast and does not break after updates.' },
-      { title: 'Clear timeline and price', text: 'We fix the price and timeline before we start. I share progress along the way, so there are no surprises.' },
+      { title: 'Clear timeline and price in USD', text: 'We fix the price and timeline before we start. I share progress along the way, so there are no surprises.' },
       { title: 'The site is fully yours', text: 'Domain, hosting and all access are registered in your name. I help with edits after launch.' },
     ],
     reviews: [],
@@ -176,10 +179,12 @@ const en: Dict = {
   faq: {
     title: 'Questions about building a website',
     lead: 'Didn’t find an answer? Send me a message and I’ll reply personally.',
-    ask: 'Ask on Telegram',
+    ask: 'Ask a question',
     items: [
+      { q: 'Do you work with clients outside Ukraine?', a: 'Yes. Most of my recent projects are for businesses in the US: New York, Texas and Arizona. Everything is done remotely: we talk by email, WhatsApp or video call, and you get the website on your own domain.' },
+      { q: 'How do we communicate?', a: 'In English, by email, WhatsApp, Telegram or a Zoom / Google Meet call, whichever is easier for you. I reply personally, without managers.' },
       { q: 'How long does it take to build a website?', a: 'A landing page usually takes 3–5 days, a business website 3–7 days, a multi-page website 1–2 weeks. I give you an exact timeline after the brief.' },
-      { q: 'How does payment work?', a: 'We work under a contract with staged payments: a deposit before we start and the rest once you approve the result. Details are agreed individually.' },
+      { q: 'How does payment work?', a: 'Prices are in USD. We work under a contract with staged payments: a deposit before we start and the rest once you approve the result. We agree on a convenient payment method before the project starts.' },
       { q: 'What do you need from me to get started?', a: 'A short description of your business, texts and photos (if you have them), and examples of websites you like. No materials yet? I’ll help with the structure and copy.' },
       { q: 'Who will update the site after launch?', a: 'I will. Just tell me what to change, whether it’s text, prices, photos or a new section, and I’ll update the site. You don’t need to learn any admin panel.' },
       { q: 'Who buys the domain and hosting?', a: 'I recommend registering them in your name so the site always belongs to you. A domain costs from about $12 per year, and hosting for a simple site can be free. I’ll help you choose and set everything up.' },
@@ -188,15 +193,15 @@ const en: Dict = {
   },
   contact: {
     title: 'Let’s talk about your project',
-    lead: 'Tell me briefly what you need, and I’ll reply with examples and an estimated price. I work with clients in Ukraine, the US and worldwide.',
+    lead: 'Tell me briefly what you need, and I’ll reply with examples and an estimated price in USD. I work with clients in the US, Ukraine and worldwide.',
     phone: 'Phone',
     form: {
       subject: 'New inquiry from the website (EN)',
       name: 'Name',
       namePh: 'How should I address you',
-      contact: 'Telegram or phone',
-      contactPh: '@username or phone number',
-      contactHint: 'Enter your Telegram (@username), phone number or email',
+      contact: 'Email, WhatsApp or phone',
+      contactPh: 'you@company.com or +1…',
+      contactHint: 'Enter your email, WhatsApp / phone number or Telegram (@username)',
       project: 'What you need',
       other: 'Something else / not sure',
       message: 'About your project',
@@ -217,7 +222,7 @@ const en: Dict = {
     sections: 'Sections',
     contacts: 'Contacts',
     timeNote: 'Kyiv time',
-    worldwide: 'I work with clients across Ukraine and abroad.',
+    worldwide: 'I work with clients in the US, Ukraine and worldwide.',
     rights: 'All rights reserved.',
     up: 'Back to top',
     privacy: 'Privacy policy',

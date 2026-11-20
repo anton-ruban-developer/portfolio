@@ -15,6 +15,7 @@ const nav = [
   { href: localizePath(lang, '/contacts/'), label: t.nav.contact },
 ];
 const contacts = [
+  ...(lang === 'en' ? [{ label: 'WhatsApp', value: site.phoneLabel, href: site.whatsapp, ext: true }] : []),
   { label: 'Telegram', value: site.telegramHandle, href: site.telegram, ext: true },
   { label: t.contact.phone, value: site.phoneLabel, href: `tel:${site.phone}` },
   { label: 'Email', value: emailMasked, href: '#contact', email: emailEncoded },

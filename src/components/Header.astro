@@ -2,8 +2,10 @@
 import { site } from '../data/site';
 import { useT, locales, langMeta, stripLocale, localizePath } from '../i18n';
 import { servicesFor } from '../data/services';
+import { primaryCta } from '../data/cta';
 
 const { lang, t, home } = useT(Astro.currentLocale);
+const cta = primaryCta(lang, t);
 
 // сторінки послуг (підменю «Послуги»): лише ті, що вже є цією мовою
 const current = Astro.url.pathname.replace(/\/?$/, '/');
@@ -54,7 +56,7 @@ const langs = locales.map((l) => ({ code: l, href: localizePath(l, pagePath), ..
         <span class="menu-status"><i></i> {t.ui.acceptingProjects}</span>
         <a class="menu-phone" href={`tel:${site.phone}`}>{site.phoneLabel}</a>
       </div>
-      <a class="btn" href={site.telegram} target="_blank" rel="noopener" style={`--i:${links.length + 1}`}>{t.ui.telegramCta}</a>
+      <a class="btn" href={cta.href} target={cta.external ? '_blank' : undefined} rel={cta.external ? 'noopener' : undefined} style={`--i:${links.length + 1}`}>{cta.label}</a>
     </nav>
 
     <nav class="langs" aria-label={t.ui.language}>

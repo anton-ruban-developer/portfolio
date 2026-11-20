@@ -179,12 +179,12 @@ const businessCard: Partial<Record<Locale, ServicePageText>> = {
   en: {
     metaTitle: 'Small Business Website Design | Ruban Web Studio',
     metaDescription:
-      'A turnkey business website in 3–7 days: up to 5 pages, services and prices, reviews, map and contact buttons, local search optimization. From $350.',
+      'A turnkey business website in 3–7 days: up to 5 pages, services and prices, reviews, map and contact buttons, local search optimization. From $550.',
 
     eyebrow: 'Services · Business website',
     h1: 'Turnkey business website',
     intro:
-      'A business website is a compact site of up to 5 pages where a client learns in a minute what you do, how much it costs and how to reach you. I build business websites for small businesses and professionals in Ukraine and abroad, so people find you on Google and trust you from the first visit.',
+      'A business website is a compact site of up to 5 pages where a client learns in a minute what you do, how much it costs and how to reach you. I build business websites for small businesses and professionals in the US and worldwide, so people find you on Google and trust you from the first visit.',
 
     about: {
       title: 'Who needs a business website',
@@ -230,7 +230,7 @@ const businessCard: Partial<Record<Locale, ServicePageText>> = {
     price: {
       title: 'How much does a business website cost',
       text: [
-        'A business website starts from $350. I give an exact quote after a short brief and fix it before we start.',
+        'A business website starts from $550. I give an exact quote after a short brief and fix it before we start.',
         'Payment in parts: a deposit before we start and the rest after you approve the result. The domain and hosting are paid separately, and I’ll help you choose an affordable option.',
       ],
       factors: [
@@ -249,7 +249,7 @@ const businessCard: Partial<Record<Locale, ServicePageText>> = {
 
     faq: [
       { q: 'How long does it take to build a business website?', a: 'Usually 3–7 days from the approved brief to launch. It depends on the number of pages and whether texts and photos are ready.' },
-      { q: 'How much does a business website cost?', a: 'From $350. The price depends on the number of pages, how ready your materials are and the number of languages. The final price is fixed after the brief.' },
+      { q: 'How much does a business website cost?', a: 'From $550. The price depends on the number of pages, how ready your materials are and the number of languages. The final price is fixed after the brief.' },
       { q: 'How is it different from a landing page?', a: 'A landing page is one page for one offer and works best with ads. A business website has up to 5 pages and is better for being found on Google and letting clients learn about your business in detail.' },
       { q: 'Will people find me on Google?', a: 'I prepare the site for local search: titles, descriptions, structured data and Search Console setup. Top positions depend on competition and time, but without this groundwork a site is barely visible in search.' },
       { q: 'Who will make changes after launch?', a: 'I will. You tell me what to change: prices, photos, text or a new section, and I update the site. Edits are free for the first month.' },

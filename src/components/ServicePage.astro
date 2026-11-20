@@ -91,7 +91,9 @@ const srcset = (img: string) => `${img.replace('/portfolio/', '/portfolio/sm/')}
           </div>
           <div class="actions">
             <a class="btn" href="#contact">{ui.discuss}</a>
-            <a class="btn btn--ghost" href={site.telegram} target="_blank" rel="noopener">{t.ui.telegramCta}</a>
+            {lang === 'en'
+              ? <a class="btn btn--ghost" href={site.whatsapp} target="_blank" rel="noopener">Message on WhatsApp</a>
+              : <a class="btn btn--ghost" href={site.telegram} target="_blank" rel="noopener">{t.ui.telegramCta}</a>}
           </div>
         </div>
         {artProject && (

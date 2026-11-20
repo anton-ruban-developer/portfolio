@@ -73,25 +73,25 @@ export const contacts: Record<Locale, ContactsText> = {
   en: {
     metaTitle: 'Contact: Order a Website | Ruban Web Studio',
     metaDescription:
-      'Get in touch to order a landing page, business website or multi-page website: Telegram, phone, email or the contact form. Based in Ukraine, working with clients worldwide.',
+      'Get in touch to order a landing page, business website or multi-page website: email, WhatsApp, Telegram, a video call or the contact form. Working with clients in the US and worldwide.',
     eyebrow: 'Contact',
     h1: 'Let’s talk about your website',
     intro:
-      'Message me on Telegram, call, or leave a request using the form. You talk to me directly, with no managers in between: I’ll suggest the right website format, show examples and give you an estimated price.',
+      'Email me, message me on WhatsApp or Telegram, or leave a request using the form. You talk to me directly in English, with no managers in between: I’ll suggest the right website format, show examples and give you an estimated price in USD.',
     formTitle: 'Get in touch',
     formLead: 'Choose a convenient way to reach me or leave a request, and I’ll reply with examples and an estimated price.',
     next: {
       title: 'What happens next',
       lead: 'The first contact doesn’t commit you to anything.',
       steps: [
-        { title: 'Reply', text: 'I reply in the messenger of your choice or by phone and ask a few clarifying questions.' },
-        { title: 'Short brief', text: 'We discuss your goals, audience and websites you like, by message or on a call.' },
-        { title: 'Price and timeline', text: 'I suggest a website format and give you the price and timeline. We fix them before we start.' },
+        { title: 'Reply', text: 'I reply by email, WhatsApp or Telegram, whichever you prefer, and ask a few clarifying questions.' },
+        { title: 'Short brief', text: 'We discuss your goals, audience and websites you like, by message or on a Zoom / Google Meet call at a time that suits your time zone.' },
+        { title: 'Price and timeline', text: 'I suggest a website format and give you the price in USD and a timeline. We fix them before we start.' },
       ],
     },
     where: {
       title: 'Where I work',
-      text: 'I’m based in Kharkiv, Ukraine, and work remotely with clients across Ukraine and abroad: everything can be discussed online, and you get the website on your own domain.',
+      text: 'I’m based in Kharkiv, Ukraine (7 hours ahead of New York) and work remotely with clients in the US and worldwide: everything is discussed online, and you get the website on your own domain.',
       time: 'Time in Kharkiv',
       timeNote: 'Kyiv time',
     },

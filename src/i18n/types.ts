@@ -44,6 +44,9 @@ export interface Dict {
     openMenu: string;
     language: string;
     acceptingProjects: string;
+    /** головна кнопка сайту (шапка, перший екран, кнопка внизу на телефоні) замість Telegram:
+     *  використовується в англійській версії, де клієнтам звичніша форма заявки */
+    primaryCta?: { label: string; path: string };
   };
   hero: {
     eyebrow: string;
